@@ -36,3 +36,13 @@
     transform: rotate(360deg);
   }
 }
+
+.font-link {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 400;
+}
+
+.font-header-link {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600;
+}

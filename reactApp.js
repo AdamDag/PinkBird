@@ -1,29 +1,38 @@
 import logo from "./logo.svg";
+import Button from '@mui/material/Button';
+import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import "./style.css";
   
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#ff80ab',
+    },
+    secondary: {
+      main: '#ffc1e3',
+    },
+  },
+});
+
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" 
-             alt="logo" />
-          
-<p>A simple React app.....</p>
-  
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <form action="../../post" method="post" 
-              className="form">
-          <button type="submit">Connected?</button>
-        </form>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <header className="App-header">
+          <span className="font-header-link">
+            PinkBird
+          </span>
+        </header>
+        <body className="App-body">
+          <Button size="large" variant="contained" color="secondary" startIcon={<DocumentScannerIcon />}>
+            <span className="font-link">
+            Scan
+            </span>
+          </Button>
+        </body>
+      </div>
+    </ThemeProvider>
   );
 }
   
