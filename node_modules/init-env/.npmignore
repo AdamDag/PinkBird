@@ -1,0 +1,12 @@
+test
+.idea
+.travis.yml
+tmp
+.tmp
+dist
+.DS_Store
+.config
+.env
+.config.json
+.env.json
+test.js
