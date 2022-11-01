@@ -10,16 +10,16 @@ const Item = new mongoose.Schema({
 });
 
 
-// Create a model object
-const Product = mongoose.model('product', Item);
-
-// To create connection to database
-// mongoose.connect(,
-// {  
-//    useNewUrlParser: true,  
-//    useUnifiedTopology: true,  
-//    useFindAndModify: false
-// });
+MongoClient.connect(URLSlugs, function(err, db) {
+  if (err) throw err;
+  var dbo = db.db("Item");
+  var product = { name: name, description: description, price: price, category: category};
+  dbo.collection("Products").insertOne(product, function(err, res) {
+    if (err) throw err;
+    console.log("Product added");
+    db.close();
+  });
+});
 
 
 //Item.plugin(passportLocalMongoose);
