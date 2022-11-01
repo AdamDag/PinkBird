@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+/*import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Home from './Home';
 import Scan from './Scan';
@@ -20,11 +20,11 @@ function App() {
   );
 }
 
-export default App;
+export default App;*/
 
 /* ADAMS CODE */
 
-/*require('dotenv').config()
+require('dotenv').config()
 console.log(process.env) 
 require('./db');
 
@@ -41,7 +41,7 @@ layoutsDir: __dirname + '/views/layouts',
 app.set('view engine', 'handlebars');
 
 //Sets handlebars configurations (we will go through them later on)
-app.use(express.static('public'))*/
+app.use(express.static('public'))
 
 
 /*
@@ -49,7 +49,7 @@ app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 */
-/*app.post("/post", (req, res) => {
+app.post("/post", (req, res) => {
   console.log("Connected to React");
   res.redirect("/");
 });
@@ -72,4 +72,4 @@ app.get("/punchline", (req, res) => {
 });
 app.use('/home', home);
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, console.log(`Server started on port ${PORT}`));*/
+app.listen(PORT, console.log(`Server started on port ${PORT}`));

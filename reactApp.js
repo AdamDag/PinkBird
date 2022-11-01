@@ -1,4 +1,4 @@
-/*import logo from "./logo.svg";
+import logo from "./logo.svg";
 import "./style.css";
   
 function App() {
@@ -27,4 +27,4 @@ function App() {
   );
 }
   
-export default App;*/
+export default App;
