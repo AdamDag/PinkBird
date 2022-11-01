@@ -1,4 +1,4 @@
-const express = require('express'), 
+/*const express = require('express'), 
     router = express.Router(),
     mongoose = require('mongoose');
 
@@ -6,6 +6,6 @@ const express = require('express'),
         res.render('home');
       });
 
-module.exports = router;
+module.exports = router;*/
 
     
