@@ -32,7 +32,16 @@ At PinkBird, we are offering, typically women-identifying, consumers:
 2. Using your command line, change into whichever directory you'd like to clone your respository and type *git clone insert_repository_link*.
 
 ### Easy Access
-Heroku App Link: http://pinkbird.herokuapp.com/Home
+- Heroku App Link: http://pinkbird.herokuapp.com/Home
+- If the Frontend differs from the one presented in class, the branch soniasUpdates contains all the appropriate updates. To access:
+  - Follow the *Installation* instructions above to clone the repository
+  - Ensuring you're in the project directory, in one tab of your terminal:
+    - Type in the command line ***cd frontend***
+    - Type in the command line ***npm install*** if it hasn't been already
+    - Type in the command line ***npm start***
+  - In another tab:
+    - Type in the command line ***cd backend***
+    - Type in the command line ***npm run dev***
 
 ## Main Team
 - Naim Mousa
