@@ -1,0 +1,14 @@
+.ItemPage{
+    padding: 3%;
+}
+
+.ItemPage img{
+    padding: 3%;
+    padding-left: 10%;
+    width: 50vh;
+    float: left;
+}
+
+.ItemPage ul{
+    list-style: none;
+}
