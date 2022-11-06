@@ -39,3 +39,51 @@ function comparePrice(price, average){
     }
 
 }
+
+function alternatvies(products){
+
+    // Finding average price of alternatives
+    let altPriveAvg = averagePrice(products);
+
+    // Setting upper and lower bounds for the average price of alternatives
+    let lowerRange = altPriceAvg*0.8;
+    let upperRange = altPriceAvg*1.8;
+    
+    // List of alternative products
+    const alternatvies = [];
+
+    // Iterating throgh list of alternative products
+    for (let i = 0; i < products.length; i++){
+        if (products[i].gender == "female"){
+
+            // Adding product to list if it fits criteria
+            if ((products[i].price >= lowerRange) && (products[i].price <= upperRange)){
+                alternatvies.push(products[i]);
+            }
+
+            else continue;
+        }
+
+        else continue;
+    }
+
+    return alternatvies;
+}
+
+function pinkTax(maleProducts, femaleProdcuts, product){
+    
+    // Calculating the average price of male and female subcategories
+    let avgMalePrice = averagePrice(maleProdcuts);
+    let avgFemalePrice = averagePrice(femaleProdcuts);
+
+    // Calculating the base pink tax in a product cateogry
+    let basePinkTax = (avgFemalePrice/avgMalePrice)*100;
+
+    // Pink tax on this product is the average of the base pink tax
+    // and the pink tax on the product compared to male products 
+    // in the same product category
+    let finalPinkTax = (((product.price/avgMalePrice)*100)+basePinkTax)/2;
+    return finalPinkTax;
+}
+
+
