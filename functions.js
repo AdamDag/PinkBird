@@ -40,7 +40,8 @@ function comparePrice(price, average){
 
 }
 
-function alternatvies(products){
+
+function alternatives(products){
 
     // Finding average price of alternatives
     let altPriveAvg = averagePrice(products);
@@ -50,7 +51,7 @@ function alternatvies(products){
     let upperRange = altPriceAvg*1.8;
     
     // List of alternative products
-    const alternatvies = [];
+    const alternatives = [];
 
     // Iterating throgh list of alternative products
     for (let i = 0; i < products.length; i++){
@@ -58,7 +59,7 @@ function alternatvies(products){
 
             // Adding product to list if it fits criteria
             if ((products[i].price >= lowerRange) && (products[i].price <= upperRange)){
-                alternatvies.push(products[i]);
+                alternatives.push(products[i]);
             }
 
             else continue;
