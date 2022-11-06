@@ -9,7 +9,7 @@ const Item = new mongoose.Schema({
     category: String
 });
 
-
+/*
 MongoClient.connect(URLSlugs, function(err, db) {
   if (err) throw err;
   var dbo = db.db("Item");
@@ -20,7 +20,7 @@ MongoClient.connect(URLSlugs, function(err, db) {
     db.close();
   });
 });
-
+*/
 
 //Item.plugin(passportLocalMongoose);
 Item.plugin(URLSlugs('name'));
