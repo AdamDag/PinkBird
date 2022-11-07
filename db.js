@@ -14,7 +14,8 @@
     description: String,
     price: Number,
     category: String,
-    brand: String
+    brand: String,
+    gender: String,
 });
 
 //Item.plugin(passportLocalMongoose);

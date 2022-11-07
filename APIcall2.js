@@ -33,9 +33,10 @@ function pinkify(data){
     let description = data.products[0].description;
     let brand = data.products[0].brand;
     let category = data.products[0].category;
+    let gender = data.products[0].gender;
 
     //create new mongoose object
-    Product.create({barcode, name, description, price, category, brand}, function (err, large) {
+    Product.create({barcode, name, description, price, category, brand, gender}, function (err, large) {
         if (err) return handleError(err);
         // saved!
       });
