@@ -5,6 +5,13 @@ console.log(Product);
 //Item = mongoose.model('Item', Item);
 
 function getAPIdata(barcode) {
+    //check if barcode exists in database
+    if (Product.exists({barcode: barcode})){
+        //if it does, return the data
+        return Product.findOne({barcode: barcode});
+    }
+    else{
+    //if it doesn't, get the data from the API
     //const proxyurl = "https://pinkbird.herokuapp.com/"; // Use a proxy to avoid CORS error
     const api_key = "vva9dg8tt9lljbuwsleah5ff4i2zdp";
     //const barcode = document.getElementById("barcode").value;
@@ -22,6 +29,7 @@ function getAPIdata(barcode) {
             .catch(err => { 
                 throw err 
             });
+}
 }
 getAPIdata("3614272049529");
 
