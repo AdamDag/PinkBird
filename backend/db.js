@@ -1,27 +1,29 @@
-const mongoose = require('mongoose'),
-	URLSlugs = require('mongoose-url-slugs');
+const mongoose = require('mongoose');
 
+  main().catch(err => console.log(err));
+  
+  async function main() {
+    await mongoose.connect('mongodb+srv://PinkEagle:PinkBird2022@littlebird1.cjyq3cs.mongodb.net/?retryWrites=true&w=majority');
+    console.log("made it");
+    // use `await mongoose.connect('mongodb://user:password@localhost:27017/test');` if your database has auth enabled
+  }
 
-const Item = new mongoose.Schema({
+ let ProductSchema = new mongoose.Schema({
+  barcode: String,
     name: String,
     description: String,
     price: Number,
-    category: String
+    category: String,
+    brand: String,
+    gender: String,
 });
-
-/*
-MongoClient.connect(URLSlugs, function(err, db) {
-  if (err) throw err;
-  var dbo = db.db("Item");
-  var product = { name: name, description: description, price: price, category: category};
-  dbo.collection("Products").insertOne(product, function(err, res) {
-    if (err) throw err;
-    console.log("Product added");
-    db.close();
-  });
-});
-*/
 
 //Item.plugin(passportLocalMongoose);
-Item.plugin(URLSlugs('name'));
+//Item.plugin(URLSlugs('name'));
 
+
+let Product = mongoose.model('Product', ProductSchema);
+
+module.exports = {
+    Product: Product
+};
