@@ -1,10 +1,5 @@
 # PinkBird
 
-<<<<<<< HEAD
-## Access Instructions
-
-First, start by cloning the repository on your local machine. Once done, go into the directory labeled "frontend." Afterwards, type npm install, if you haven't already. Once done, type npm start to display the web app to your browser.
-=======
 ## About PinkBird
 PinkBird is a web application that offers users the ability to scan the barcode of a product and recieve the Pink Tax associated with projects. As Pink Taxes have become fairly common with the intent to upcharge products marketed towards women, we are choosing to use our skills to fight against gender inequality. 
 
@@ -77,5 +72,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
->>>>>>> 2a4f709d7a7cd02c3ee378e2bcf9fb44a566c053
