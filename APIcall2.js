@@ -1,16 +1,27 @@
+const { default: mongoose } = require('mongoose');
 let fetch = require('node-fetch');
 let {Product} = require('./db.js');
+//module.exports = {Product, getAPIdata, pinkify, averagePriceUSD, averagePriceCAD, pinkTaxCalc, averageCategoryPrice};
+
 //require('db.js');
-console.log(Product);
+//console.log(Product);
 //Item = mongoose.model('Item', Item);
 
-function getAPIdata(barcode) {
+async function getAPIdata(barcode) {
     //check if barcode exists in database
-    if (Product.exists({barcode: barcode})){
+    
+    if ((await Product.find({barcode: barcode})).length > 0){
         //if it does, return the data
-        return Product.findOne({barcode: barcode});
+        
+        //console.log("exists");
+        let existingProduct = await Product.find({barcode: barcode});
+        console.log(existingProduct);
+        //console.log('here');
+        return existingProduct;
+
     }
     else{
+        console.log('here i am');
     //if it doesn't, get the data from the API
     //const proxyurl = "https://pinkbird.herokuapp.com/"; // Use a proxy to avoid CORS error
     const api_key = "vva9dg8tt9lljbuwsleah5ff4i2zdp";
@@ -23,7 +34,7 @@ function getAPIdata(barcode) {
             .then(response => response.json())
             .then((data) => {
    console.log(averagePriceUSD(data));
-    console.log(data.products[0].stores);
+    //console.log(data.products[0].stores);
     pinkify(data);
             })
             .catch(err => { 
@@ -31,10 +42,16 @@ function getAPIdata(barcode) {
             });
 }
 }
-getAPIdata("3614272049529");
+//getAPIdata("079400260949");
 
-function pinkify(data){
-    //
+console.log(getAPIdata("079400472502").then((data) => {
+    console.log(data)
+    }));
+    
+
+async function pinkify(data){
+    let acp = await averageCategoryPrice(data);
+
     let price = averagePriceUSD(data);
     let barcode = data.products[0].barcode_number;
     let name = data.products[0].title;
@@ -42,11 +59,13 @@ function pinkify(data){
     let brand = data.products[0].brand;
     let category = data.products[0].category;
     let gender = data.products[0].gender;
-
+    let pinktax = pinkTaxCalc(data, acp);
+    
     //create new mongoose object
-    Product.create({barcode, name, description, price, category, brand, gender}, function (err, large) {
+    await Product.create({barcode, name, description, price, category, brand, gender, pinktax}, function (err, large) {
         if (err) return handleError(err);
         // saved!
+        console.log("CREATE");
       });
 }
 
@@ -57,12 +76,40 @@ function averagePriceUSD(data){
     let sum = 0;
     for(let i = 0; i < data.products[0].stores.length; i++){
         //get the price
-        if(data.products[0].stores[i].currency == "USD"){
+        if(data.products[0].stores[i].currency == 'USD'){
             //add the price to a sum
-            sum += data.products[0].stores[i].price;
+            sum += parseFloat(data.products[0].stores[i].price);
+            //console.log(typeof data.products[0].stores[i].price);
             //increment a counter
             USDCounter++;
-            averagePrice = sum / USDCounter;
+            unroundedAveragePrice = sum / USDCounter;
+            averagePrice = unroundedAveragePrice.toFixed(2);
+
+        }
+        if (USDCounter == 0){
+            averagePrice = averagePriceCAD(data);
+        }
+    }
+    //divide the sum by the number of stores
+    return averagePrice;
+
+}
+function averagePriceCAD(data){
+    //for all stores in data
+    let CADCounter = 0;
+    let averagePrice = 0;
+    let sum = 0;
+    for(let i = 0; i < data.products[0].stores.length; i++){
+        //get the price
+        if(data.products[0].stores[i].currency == 'CAD'){
+            //add the price to a sum
+            sum += parseFloat(data.products[0].stores[i].price);
+            //console.log(typeof data.products[0].stores[i].price);
+            //increment a counter
+            CADCounter++;
+            unroundedAveragePrice = sum / CADCounter;
+            averagePrice = (unroundedAveragePrice*0.75).toFixed(2);
+
         }
     }
     //divide the sum by the number of stores
@@ -70,6 +117,64 @@ function averagePriceUSD(data){
 
 }
 
+function pinkTaxCalc(data, acp){
+    if(data.gender === 'male' || data.gender === 'unisex'){
+        return false;
+    }
+    else {
+        if(averagePriceUSD(data)/acp >= 1.1){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 
+}
+
+async function averageCategoryPrice(data){
+    //access database
+    //find all products in the same category
+
+    //get the average price of all items in that category
+    let sumCatPrice = 0;
+    let catCounter = 0;
+    let catArray = [];
+    console.log(data.products[0].category);
+    console.log(data.products[0].title);
+    //console.log(productdb);
+    //console.log(data.category);
+    //console.log(data.name);
+    if ((await Product.find({category: data.products[0].category})).length > 0){
+        //add the data to the array
+
+        catArray = await Product.find({category: data.products[0].category}); 
+        console.log("FIND");
+    }
+    else{
+        /*
+    for(let i = 0; i < data.products.length; i++){
+        if(data.products[i].category === data.category){
+            catArray.push(data.products[i]);
+        }
+        */
+        //await(Product.find({category: data.products[i].category}))
+    }
+    //console.log(data.category)
+    console.log(catArray.length);
+    for (let i=0; i < catArray.length; i+=1){
+        if(catArray[i].pinktax == false){
+            sumCatPrice += parseFloat(catArray[i].price);
+            catCounter+=1;
+        }
+    }
+
+    let averageCatPrice = sumCatPrice / catCounter;
+    //return the average price of all items in that category
+    console.log(catCounter);
+    console.log(sumCatPrice);
+    console.log(averageCatPrice);
+    return averageCatPrice;
+}
 
 //
