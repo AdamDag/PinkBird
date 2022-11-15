@@ -14,8 +14,31 @@
     width: 50vh;
 }
 
-.ScanPage .Scan-body{
-    margin-bottom: 3%;
+.ScanPage span{
+    float: left;
+    padding: 2%;
+    padding-left: 5%;
+}
+
+
+.ScanPage .Scan-header span{
+    padding: 2%;
+    padding-left: 5%;
+    float: left;
+}
+
+.ScanPage .Scan-header nav{
+    font-size: 20px;
+    padding-right: 5%;
+}
+
+.ScanPage .Scan-header ul{
+    list-style-type: none;
+}
+
+.ScanPage .Scan-header li{
+    float: right;
+    padding: 2%;
 }
 
 

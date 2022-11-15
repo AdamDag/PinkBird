@@ -3,6 +3,7 @@ import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import "./Scan.css";
 import docscan from './images/docscan.jpeg'
+import Header from './Header'
 
   
 const theme = createTheme({
@@ -24,6 +25,14 @@ function Scan() {
           <span className="font-header-link">
             PinkBird
           </span>
+          <nav>
+            <ul>
+              <li><a href = "./AboutUs">About Us</a></li>
+              <li><a href = "./ReadMore">Read More</a></li>
+              <li><a href = "./Explore">Explore</a></li>
+              <li><a href = "./Scan">Scan</a></li>
+            </ul>
+          </nav>
         </header>
         <img src={docscan} alt="Doc Scan"/>
         <body className="Scan-body">

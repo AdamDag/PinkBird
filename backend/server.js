@@ -1,10 +1,20 @@
 const express = require('express')
 const app = express()
-
-app.get("/api", (req, res) => {
-    res.json({ "users": ["Alternative Data 1", "Alternative Data 1", "Alternative Data 1", "Alternative Data 1"] })
-})
+const server = require("./app")
 
 const db = require("./db.js")
+const port = 4000
 
-app.listen(5000, () => {console.log("Server started on port 5000")})
+const listener = server.listen(port, function () {
+    console.log(`Server running on port: ${port}`)
+})
+
+// a function to stop listening to the port
+const close = () => {
+    listener.close()
+}
+
+// export the close function
+module.exports = {
+    close: close,
+}
