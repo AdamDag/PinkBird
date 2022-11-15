@@ -55,7 +55,7 @@ function alternatives(products){
 
     // Iterating throgh list of alternative products
     for (let i = 0; i < products.length; i++){
-        if (products[i].gender == "female"){
+        if (products[i].gender != "male"){
 
             // Adding product to list if it fits criteria
             if ((products[i].price >= lowerRange) && (products[i].price <= upperRange)){
@@ -71,11 +71,11 @@ function alternatives(products){
     return alternatvies;
 }
 
-function pinkTax(maleProducts, femaleProdcuts, product){
+function pinkTax(maleProducts, femaleProducts, product){
     
     // Calculating the average price of male and female subcategories
-    let avgMalePrice = averagePrice(maleProdcuts);
-    let avgFemalePrice = averagePrice(femaleProdcuts);
+    let avgMalePrice = averagePrice(maleProducts);
+    let avgFemalePrice = averagePrice(femaleProducts);
 
     // Calculating the base pink tax in a product cateogry
     let basePinkTax = (avgFemalePrice/avgMalePrice)*100;
@@ -86,5 +86,129 @@ function pinkTax(maleProducts, femaleProdcuts, product){
     let finalPinkTax = (((product.price/avgMalePrice)*100)+basePinkTax)/2;
     return finalPinkTax;
 }
+
+
+function productsOfShame(data){
+
+    const objectList = [];
+
+    for (var i = 0; i < data.length; i++){
+        if (data[i].pinktax){
+            objectList.push(data[i]);
+        }
+    }
+
+    objectList = sortByTax(objectList);
+
+    const shameList = [];
+
+    for (var i = objectList.length - 1; i >= objectList.length - 10; i--){
+        shameList.push(objectList[i]);
+    }
+
+    return shameList;
+}
+
+
+function sortByTax(data){
+    
+    for (let i = 1; i < data.length; i++){
+
+        if (data[i].pinktax){
+
+            let temp = data[i].pinkTaxValue;
+            let j;
+        
+            for (j = i - 1; j >= 0 && data[j].pinkTaxValue > temp; j--){
+                data[j + 1] = data[j];
+            }
+            
+            data[j + 1].pinkTaxValue = temp;
+        }
+    }
+
+    return data;
+}
+
+
+function categoriesOfShame(data){
+
+    const objectList = [];
+    const categoryList = [];
+    const categoryAvgTax = [];
+
+    let totalTax = 0;
+    let counter = 0;
+
+    for (var i = 0; i < data.length; i++){
+        if (data[i].pinktax){
+            objectList.push(data[i]);
+        }
+    }
+
+    for (var i = 0; i < objectList.length; i++){
+        
+        if (!categoryList.includes(objectList[i].category)){
+            categoryList.push(objectList[i].category);
+        }
+    }
+
+    for (var i = 0; i < categoryList.length; i++){
+
+        totalTax = 0;
+        counter = 0;
+
+        for (var j = 0; j < objectList.length; i++){
+            if (objectList[j].categery == categoryList[i]){
+                totalTax = totalTax + objectList[j].pinkTaxValue;
+                counter++;
+            }
+        }
+
+        categoryAvgTax.push(totalTax/counter);
+    }
+
+    const temp = sortCatByTax(categoryList, categoryAvgTax);
+
+    const shameList = [];
+
+    for (var i = temp.length - 2; i >= temp.length - 6; i - 2){
+        shameList.push(temp[i]);
+        shameList.push(temp[i+1]);
+    }
+
+    return shameList;
+}
+
+
+function sortCatByTax(categories, catTax){
+
+    const outputList = [];
+    
+    for (let i = 1; i < catTax.length; i++){
+
+            let temp = catTax[i];
+            let j;
+        
+            for (j = i - 1; j >= 0 && catTax[j] > temp; j--){
+                catTax[j + 1] = catTax[j];
+                categories[j + 1] = categories[j];
+            }
+            
+            catTax[j + 1] = temp;
+    }
+
+    for (let i = 1; i < catTax.length; i++){
+
+        outputList.push(categories[i]);
+        outputList.push(catTax[i].toString());
+
+    }
+
+    return outputList;
+}
+
+
+
 
 
