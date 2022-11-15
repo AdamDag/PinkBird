@@ -57,12 +57,16 @@ async function pinkify(data){
     let name = data.products[0].title;
     let description = data.products[0].description;
     let brand = data.products[0].brand;
-    let category = data.products[0].category;
+    let category = categorize(data);
     let gender = data.products[0].gender;
     let pinktax = pinkTaxCalc(data, acp);
+    console.log(price, acp);
+    let pinkTaxValue = price - acp;
+    
+
     
     //create new mongoose object
-    await Product.create({barcode, name, description, price, category, brand, gender, pinktax}, function (err, large) {
+    await Product.create({barcode, name, description, price, category, brand, gender, pinktax, pinkTaxValue}, function (err, large) {
         if (err) return handleError(err);
         // saved!
         console.log("CREATE");
@@ -145,10 +149,10 @@ async function averageCategoryPrice(data){
     //console.log(productdb);
     //console.log(data.category);
     //console.log(data.name);
-    if ((await Product.find({category: data.products[0].category})).length > 0){
+    if ((await Product.find({category: categorize(data)})).length > 0){
         //add the data to the array
 
-        catArray = await Product.find({category: data.products[0].category}); 
+        catArray = await Product.find({category: categorize(data)}); 
         console.log("FIND");
     }
     else{
@@ -176,5 +180,14 @@ async function averageCategoryPrice(data){
     console.log(averageCatPrice);
     return averageCatPrice;
 }
+function categorize(data){
+    if(data.products[0].category.includes('Antiperspirant') || data.products[0].category.includes('Deodorant')|| data.products[0].category.includes('Anti-Perspirant') || data.products[0].title.includes('Antiperspirant') || data.products[0].title.includes('Deodorant')|| data.products[0].title.includes('Anti-Perspirant')){
+        return 'Anti-Perspirant & Deodorant';
+    }
+    else if(data.products[0].category.includes('Shampoo') || data.products[0].category.includes('Conditioner')|| data.products[0].category.includes('Hair') || data.products[0].title.includes('Shampoo') || data.products[0].title.includes('Conditioner')|| data.products[0].title.includes('Hair')){
+        return 'Shampoo & Conditioner';
+    }
 
+
+}
 //

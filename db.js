@@ -17,6 +17,7 @@
     brand: String,
     gender: String,
     pinktax: Boolean,
+    pinkTaxValue: Number
 });
 
 //Item.plugin(passportLocalMongoose);

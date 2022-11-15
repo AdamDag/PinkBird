@@ -39,3 +39,4 @@ function comparePrice(price, average){
     }
 
 }
+
