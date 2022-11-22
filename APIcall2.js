@@ -24,7 +24,8 @@ async function getAPIdata(barcode) {
         console.log('here i am');
     //if it doesn't, get the data from the API
     //const proxyurl = "https://pinkbird.herokuapp.com/"; // Use a proxy to avoid CORS error
-    const api_key = "vva9dg8tt9lljbuwsleah5ff4i2zdp";
+    //const api_key = "vva9dg8tt9lljbuwsleah5ff4i2zdp";
+    const api_key = "d8zvuvrsz7d2asckeql07nwej1ow33";
     //const barcode = document.getElementById("barcode").value;
     //CONCATENATE BARCODE WITH URL
     const url = "https://api.barcodelookup.com/v3/products?barcode="+barcode+"&formatted=y&key=" + api_key;
@@ -44,7 +45,7 @@ async function getAPIdata(barcode) {
 }
 //getAPIdata("079400260949");
 
-console.log(getAPIdata("037000757832").then((data) => {
+console.log(getAPIdata("4084500488465").then((data) => {
     console.log(data)
     }));
     
@@ -67,7 +68,7 @@ async function pinkify(data){
     
     //create new mongoose object
     await Product.create({barcode, name, description, price, category, brand, gender, pinktax, pinkTaxValue}, function (err, large) {
-        if (err) return handleError(err);
+        if (err) return console.error(err);
         // saved!
         console.log("CREATE");
       });
@@ -81,16 +82,16 @@ async function reCalculatePinkTax(data){
         console.log(productDb);
         //add the data to the array
         for(let i = 0; i < productDb.length; i++){
-            
-            let pinkTax = pinkTaxCalc(data[i], acp);
-            let pinkTaxValue = productDb[i].price - acp;
+            console.log("TEST:" , data);
+            console.log("TEST 2", productDb);
+            let pinkTax = pinkTaxCalc2(productDb[i], await acp);
+            let pinkTaxValue = productDb[i].price - await acp;
+            console.log(productDb[i].price, await acp);
+            console.log(pinkTaxValue);
 
         //update the database
-            await Product.updateOne({barcode: data.products[i].barcode_number}, {pinktax: pinkTax, pinkTaxValue: pinkTaxValue}, function (err, large) {
-                if (err) return handleError(err);
-                // saved!
-                console.log("UPDATE");
-          });
+            await Product.updateOne({barcode: productDb[i].barcode}, {pinktax: pinkTax, pinkTaxValue: pinkTaxValue});
+               
         }
     }
 
@@ -145,9 +146,19 @@ function averagePriceCAD(data){
 }
 
 function pinkTaxCalc(data, acp){
+    if(data.gender !== 'undefined'){
     if(data.gender === 'male' || data.gender === 'unisex'){
         return false;
     }
+    else {
+        if(averagePriceUSD(data)/acp >= 1.1){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+}
     else {
         if(averagePriceUSD(data)/acp >= 1.1){
             return true;
@@ -257,4 +268,28 @@ async function averageCategoryPrice2(data){
     console.log(sumCatPrice);
     console.log(averageCatPrice);
     return averageCatPrice;
+}
+function pinkTaxCalc2(data, acp){
+    if(data.gender !== 'undefined'){
+    if(data.gender === 'male' || data.gender === 'unisex'){
+        return false;
+    }
+    else {
+        if(data.price/acp >= 1.1){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+}
+    else {
+        if(data.price/acp >= 1.1){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
 }
