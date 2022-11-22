@@ -2,7 +2,6 @@ import Button from '@mui/material/Button';
 import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import docscan from './images/docscan.jpeg'
-import Header from './Header'
 import rethinkpink from "./images/rethinkpink.jpg"
 import razor from "./images/razortax.jpeg"
 import pinktax from "./images/pinktaxgeneral.png"
