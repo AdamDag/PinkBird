@@ -1,3 +1,6 @@
+## **Barcode Scanner Installation**
+Type ***npm install scanbot-web-sdk*** to install the ScanBot API before building anything.
+
 # PinkBird
 
 ## About PinkBird
