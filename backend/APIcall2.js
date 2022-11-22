@@ -31,7 +31,7 @@ async function getAPIdata(barcode) {
         console.log('here i am');
         //if it doesn't, get the data from the API
         //const proxyurl = "https://pinkbird.herokuapp.com/"; // Use a proxy to avoid CORS error
-        const api_key = "vva9dg8tt9lljbuwsleah5ff4i2zdp";
+        const api_key = "d8zvuvrsz7d2asckeql07nwej1ow33";
         //const barcode = document.getElementById("barcode").value;
         //CONCATENATE BARCODE WITH URL
         const url = "https://api.barcodelookup.com/v3/products?barcode="+barcode+"&formatted=y&key=" + api_key;
