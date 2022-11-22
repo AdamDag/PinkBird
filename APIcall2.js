@@ -44,7 +44,7 @@ async function getAPIdata(barcode) {
 }
 //getAPIdata("079400260949");
 
-console.log(getAPIdata("079400472502").then((data) => {
+console.log(getAPIdata("037000757832").then((data) => {
     console.log(data)
     }));
     
@@ -71,6 +71,29 @@ async function pinkify(data){
         // saved!
         console.log("CREATE");
       });
+      reCalculatePinkTax(data);
+      //
+}
+async function reCalculatePinkTax(data){
+    let productDb = await Product.find({category: categorize(data)});
+    let acp = averageCategoryPrice2(data);
+    if(productDb.length > 0){
+        console.log(productDb);
+        //add the data to the array
+        for(let i = 0; i < productDb.length; i++){
+            
+            let pinkTax = pinkTaxCalc(data[i], acp);
+            let pinkTaxValue = productDb[i].price - acp;
+
+        //update the database
+            await Product.updateOne({barcode: data.products[i].barcode_number}, {pinktax: pinkTax, pinkTaxValue: pinkTaxValue}, function (err, large) {
+                if (err) return handleError(err);
+                // saved!
+                console.log("UPDATE");
+          });
+        }
+    }
+
 }
 
 function averagePriceUSD(data){
@@ -190,4 +213,48 @@ function categorize(data){
 
 
 }
-//
+
+async function averageCategoryPrice2(data){
+    //access database
+    //find all products in the same category
+
+    //get the average price of all items in that category
+    let sumCatPrice = 0;
+    let catCounter = 0;
+    let catArray = [];
+    console.log(data.products[0].category);
+    console.log(data.products[0].title);
+    //console.log(productdb);
+    //console.log(data.category);
+    //console.log(data.name);
+    if ((await Product.find({category: categorize(data)})).length > 0){
+        //add the data to the array
+
+        catArray = await Product.find({category: categorize(data)}); 
+        console.log("FIND");
+    }
+    else{
+        /*
+    for(let i = 0; i < data.products.length; i++){
+        if(data.products[i].category === data.category){
+            catArray.push(data.products[i]);
+        }
+        */
+        //await(Product.find({category: data.products[i].category}))
+    }
+    //console.log(data.category)
+    console.log(catArray.length);
+    for (let i=0; i < catArray.length; i+=1){
+        if(catArray[i].gender == 'male' || catArray[i].gender == 'unisex'){
+            sumCatPrice += parseFloat(catArray[i].price);
+            catCounter+=1;
+        }
+    }
+
+    let averageCatPrice = sumCatPrice / catCounter;
+    //return the average price of all items in that category
+    console.log(catCounter);
+    console.log(sumCatPrice);
+    console.log(averageCatPrice);
+    return averageCatPrice;
+}
