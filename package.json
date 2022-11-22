@@ -27,6 +27,7 @@
     "hbs": "^4.2.0",
     "init-env": "^0.0.7",
     "mongoose": "^6.7.0",
-    "mongoose-url-slugs": "^1.0.2"
+    "mongoose-url-slugs": "^1.0.2",
+    "node-fetch": "^2.6.7"
   }
 }
