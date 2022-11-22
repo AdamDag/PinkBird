@@ -1,0 +1,56 @@
+[
+ {
+    "barcode": "1234567890",
+    "name": "Body Wash",
+    "description": "Body Wash for Women",
+    "price": 9.99,
+    "category": "Hygiene",
+    "brand": "Suave",
+    "gender": "Women"
+ },
+  {
+    "barcode": "2345678901",
+    "name": "Body Wash",
+    "description": "Body Wash for Men",
+    "price": 7.99,
+    "category": "Hygiene",
+    "brand": "Irish Spring",
+    "gender": "Men"
+ },
+  {
+    "barcode": "3456789012",
+    "name": "Deoderant",
+    "description": "Deoderant for Women",
+    "price": 5.99,
+    "category": "Hygiene",
+    "brand": "Secret",
+    "gender": "Women"
+ },
+  {
+    "barcode": "4567890123",
+    "name": "Deoderant",
+    "description": "Deoderant for Men",
+    "price": 4.99,
+    "category": "Hygiene",
+    "brand": "Old Spice",
+    "gender": "Women"
+ },
+  {
+    "barcode": "5678901234",
+    "name": "Shampoo",
+    "description": "Shampoo for Women",
+    "price": 7.99,
+    "category": "Hygiene",
+    "brand": "Dove",
+    "gender": "Women"
+ },
+   {
+    "barcode": "6789012345",
+    "name": "Shampoo",
+    "description": "Shampoo for Men",
+    "price": 6.99,
+    "category": "Hygiene",
+    "brand": "Dove",
+    "gender": "Women"
+ }
+]
