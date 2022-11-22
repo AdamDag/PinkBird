@@ -1,0 +1,46 @@
+/* add css for the new class */
+.ScanPage {
+    background-color: pink;
+    color: white;
+    padding: 10px;
+    height: 100px;
+    font-size: 50px;
+    flex-direction: column;
+}
+
+.ScanPage img{
+    padding: 3vh;
+    padding-top: 20vh;
+    width: 50vh;
+}
+
+.ScanPage span{
+    float: left;
+    padding: 2%;
+    padding-left: 5%;
+}
+
+
+.ScanPage .Scan-header span{
+    padding: 2%;
+    padding-left: 5%;
+    float: left;
+}
+
+.ScanPage .Scan-header nav{
+    font-size: 20px;
+    padding-right: 5%;
+}
+
+.ScanPage .Scan-header ul{
+    list-style-type: none;
+}
+
+.ScanPage .Scan-header li{
+    float: right;
+    padding: 2%;
+}
+
+
+
+/* alter font size for the existing class */
