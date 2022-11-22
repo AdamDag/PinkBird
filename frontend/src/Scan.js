@@ -42,7 +42,7 @@ export default class Scan extends React.Component{
         containerId: 'barcode-scanner-view',
       };
       config.style = {
-        window: { borderColor: "pink", aspectRatio: 1.7, left: "50%", top: "50%", paddingPropLeft: 0.5},
+        window: { borderColor: "pink", aspectRatio: 1.7, width: "100%", left: "50%", top: "50%", paddingPropLeft: 0.5},
         text: { weight: 1000, color: "white", size: "1.1em"},
         hint: "Please align the barcode in the frame to scan it."
       };
