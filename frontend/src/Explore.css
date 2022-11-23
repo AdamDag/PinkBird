@@ -7,46 +7,6 @@
     flex-direction: column;
 }
 
-.ExplorePage .Explore-header span{
-    padding: 2%;
-    padding-left: 5%;
-    float: left;
-}
-
-.ExplorePage .Explore-header nav{
-    font-size: 20px;
-    padding-right: 5%;
-}
-
-.ExplorePage .Explore-header ul{
-    list-style-type: none;
-}
-
-.ExplorePage .Explore-header li{
-    float: right;
-    padding: 2%;
-}
-
-.ExplorePage .Explore-body{
-    display: inline;
-}
-
-.ExplorePage .Explore-body h1{
-    padding-top: 5%;
-    font-size: 100px;
-    color: pink;
-}
-
-.ExplorePage .Explore-body h3{
-    font-size: 30px;
-    color: black;
-}
-
-.ExplorePage .Explore-body p{
-    font-size: 20px;
-    color: black;
-}
-
 .ExplorePage .Explore-body img{
-    width: 200px;
+    width: 100px;
 }

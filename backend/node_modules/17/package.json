@@ -1,0 +1,23 @@
+{
+  "name": "17",
+  "version": "0.0.0",
+  "description": "A kind of cli utility is planned",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kt3k/17.git"
+  },
+  "keywords": [
+    "17",
+    "cli"
+  ],
+  "author": "Yoshiya Hinosawa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kt3k/17/issues"
+  },
+  "homepage": "https://github.com/kt3k/17#readme"
+}

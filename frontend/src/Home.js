@@ -18,22 +18,9 @@ const theme = createTheme({
 
 function Home() {
   return (
-    <ThemeProvider theme={theme}>
-      <div className="HomePage">
-        <header className = "home-header">
-          <img src={bgImage} alt="Our Logo"/>
-        </header>
-        <body className="HomePage-body">
-          <a href = "./Scan">
-            <Button size="large" variant="contained" color="secondary" className= "home-page-button">
-              <span className="font-link">
-              Let's Begin!
-              </span>
-            </Button>
-          </a>
-        </body>
-      </div>
-    </ThemeProvider>
+   <div className = "">
+
+   </div>
   );
 }
   

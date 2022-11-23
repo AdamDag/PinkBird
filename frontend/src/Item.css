@@ -1,12 +1,10 @@
 .ItemPage{
     padding: 3%;
+    background-color: #F0E7E7;
 }
 
-.ItemPage img{
-    padding: 3%;
-    padding-left: 10%;
-    width: 50vh;
-    float: left;
+body{
+    background-color: #F0E7E7;
 }
 
 .ItemPage ul{

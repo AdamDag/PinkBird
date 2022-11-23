@@ -3,11 +3,11 @@ import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import "./Explore.css";
 import docscan from './images/docscan.jpeg'
-import Header from './Header'
-import male from './images/maleproducts.jpg'
+import productImage from './images/product.jpg'
 import female from './images/femaleproducts.jpeg'
 import hygiene from './images/hygiene.jpeg'
 import stationary from './images/stationary.jpeg'
+import { Link } from 'react-router-dom';
 import React, {useEffect, useState} from 'react';
 
   
@@ -40,8 +40,13 @@ function Explore() {
           {(typeof data.products === 'undefined') ? (
               <p>Loading</p>
           ): (
-              data.products?.slice(0,3).map((product, index)=> (
-                <p>{product[0]}</p>
+              data.products?.map((product, index)=> (
+                <div className="Explore-body">
+                  <img src={productImage} width = "380"/>
+                  <p>
+                    <Link to={"/Item/" + product.barcode}>{product.name}</Link> 
+                  </p>
+                </div>
                   ))
                 )}
         </>
