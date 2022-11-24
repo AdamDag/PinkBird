@@ -1,54 +1,51 @@
-body{
-	background-color: #1B2725; 
-}
-
-.LandingPageBody svg{
-	transform: scaleY(-1);
-	position: absolute;
-	top: -15vh;
-	left: 0vh;
-	height: 40vh;
-	width: 100%;
-}
-
-.LandingPageBody .landing-page-text{
-	position: absolute;
-	margin: 3vh;
-	margin-top: 6vh;
-	font-family: 'Arial Narrow', Arial, sans-serif
+.LandingPageBody img{
+	position: relative;
+	margin-top: 5vh;
+	margin-bottom: 5vh;
+    left: -4vh;
+    width: 50vh;
 }
 
 .LandingPageBody h2{
-	color: #F1D0D0;
+	color: #BF777B;
 	text-align: left;
-	margin-bottom: 2vh;
-	font-size: 30px;
+	margin-left: 4vh;
+	margin-right: 3vh;
+	margin-bottom: 1vh;
 }
 
 .LandingPageBody p{
-	color: #F1D0D0;
+	color: #BF777B;
 	text-align: left;
-	font-size: 24px;
+	margin-left: 4vh;
+	margin-right: 4vh;
 }
 
-.LandingPageBody img{
-	position: fixed;
-    bottom: 0px;
-    left: -2vh;
-    width: 48vh;
+.LandingPageBody .LandingPageButton p{
+	color: #EBF6F6;
+	font-size: 18px;
+	text-decoration: none;
 }
 
-.LandingPageBody .LandingPageBodyButton{
-	position: absolute;
-	bottom: 60vh;
-	color: black;
-	background-color: #A4BFC0; 
-	width: 30vh;
-	height: 7vh;
-	left: 8vh;
-	border-radius: 20px;
-	color: white;
-	font-size: 20px;
+.LandingPageBody .LandingPageButton p:active{
+	color: #EBF6F6;
+	font-size: 18px;
+	text-decoration: none;
 }
+
+.LandingPageBody .LandingPageButton{
+	position: relative;
+	margin-top: 3vh;
+	background-color: #BF777B;
+	height: 60px;
+	margin-bottom: 5vh;
+	text-decoration: none;
+}
+
+.LandingPageBody .LandingPageButton:hover{
+	background-color: #894f52;
+}
+
+
 
 

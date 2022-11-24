@@ -8,24 +8,22 @@
     min-height: 10vh;
     font-size: calc(10px + 1vmin);
     color: #BF777B;
-    background-color: #1B2725;
-    border-bottom-left-radius: 10%;
-    border-bottom-right-radius: 10%;
-    filter: drop-shadow(0px 0px 10px black);
+    background-color: #EBF6F6;
   }
 
   .Header img{
     width: 50px;
     flex-basis: 100%;
     float: left;
-    padding-top: 1vh;
-    padding-left: 10vh;
+    padding-top: 2vh;
+    padding-left: 2vh;
   }
 
 .Header h1{
-    font-family: "Georgia", serif;
+    font-family: "Georgia", sans-serif;
+    font-size: 36px;
     float: left;
-    padding-top: 3vh;
+    padding-top: 3.4vh;
     padding-left: 1vh;
 }
 

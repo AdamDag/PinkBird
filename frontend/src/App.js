@@ -17,7 +17,7 @@ function App() {
       <Router>
         <Header />
         <Routes>
-          <Route path="/Landing" element={<Landing />} />
+          <Route path="/" element={<Landing />} />
           <Route path="/Scan" element={<Scan />} />
           <Route path="/Item/:barcode" element={<Item />} />
           <Route path="/Explore" element={<Explore />} />
@@ -25,8 +25,6 @@ function App() {
           <Route path="/AboutUs" element={<AboutUs />} />
         </Routes>
       </Router>
-
-      <BottomNavBar />
 
     </div>
   );
