@@ -61,8 +61,11 @@ export default class Scan extends React.Component{
       } else {
         const barcodes = this.state.lastBarcode.barcodes;
         barcodeText = JSON.stringify(
-          barcodes.map((barcodes) => barcodes.text + " (" + barcodes.format + ") "));
+        barcodes.map((barcodes) => barcodes.text + " (" + barcodes.format + ") "));
       }
+      barcodeText = barcodeText.replace('["', "");
+      barcodeText = barcodeText.split(" ")[0];
+      console.log("Barcode:" + barcodeText)
 
   return (
     <div>
@@ -71,7 +74,12 @@ export default class Scan extends React.Component{
       style={{ height: "400px", width: "500px", position: "absolute", left: "50%", top: "50%",
       transform: "translate(-50%, -50%)", border: "10px solid pink", borderRadius: "15px"}}>
     </div>
-    {barcodeText}
+    <p>Item is ready when barcode appears: </p>
+    <Button>
+      <Link to = {'/Item/' + barcodeText}>
+        <p>{barcodeText}</p>
+      </Link>
+    </Button>
   </div>
 
 
