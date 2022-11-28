@@ -53,9 +53,9 @@ function alternatives(data, category){
     const alternatives = []
 
     // Retrieving all prodcuts from relevant category
-    for (let i = 0; i < data.length; i++){
-        if(data[i].brand == category){
-            products.push(data[i]);
+    for (let i = 0; i < data.products[0].stores.length; i++){
+        if(data.products[0].stores[i].brand == category){
+            products.push(data.products[0].stores[i]);
         }
     }
 
