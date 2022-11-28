@@ -25,7 +25,7 @@ function BottomNavBar() {
 
   return (
     <div className = "bottom-nav-bar">
-        <BottomNavigation value={value} onChange={handleChange}>
+        <BottomNavigation value={value} onChange={handleChange} sticky = "bottom">
             <BottomNavigationAction
                 href="/Scan"
                 label="Scan"

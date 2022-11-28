@@ -5,31 +5,51 @@ import docscan from './images/docscan.jpeg'
 import rethinkpink from "./images/rethinkpink.jpg"
 import razor from "./images/razortax.jpeg"
 import pinktax from "./images/pinktaxgeneral.png"
+import Carousel from 'react-material-ui-carousel'
+import './ReadMore.css'
 
+const url1 = "https://bnblegal.com/wp-content/uploads/2022/07/Why-Women-Products-And-Services-Are-More-Expensive-Than-Men-Pink-Tax-Explained-1.jpg"
   
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#ff80ab',
+function ReadMore(props) {
+  var items = [
+    {
+        imgUrl: "https://financialit.net/sites/default/files/business_what-is-pink-tax_grace-xu-1.jpg",
+        name: "What is the Pink Tax?",
+        description: ""
     },
-    secondary: {
-      main: '#ffc1e3',
+    {
+        imgUrl: "https://grazia.wwmindia.com/content/2021/mar/pinktax6661615331342.png",
+        name: "How Are We Helping?",
+        description: ""
     },
-  },
-});
-
-function ReadMore() {
+    {
+        imgUrl: "https://miro.medium.com/max/720/1*rs2atE87L69xdxHXLR65dA.jpeg",
+        name: "How Can You Help?",
+        description: ""
+    }
+  ]
   return (
-    <ThemeProvider theme={theme}>
       <div className="ReadMorePage">
-        <body className="ReadMore-body">
-            <h1>What is the Pink Tax?</h1>
-            <h1>How Are We Helping?</h1>
-        </body>
+        <Carousel>
+            {
+                items.map( (item, i) => <Item key={i} item={item} /> )
+            }
+        </Carousel>
       </div>
-    </ThemeProvider>
 
   );
 }
+
+function Item(props)
+{
+    return (
+      <div>
+        <img src={props.item.imgUrl}/>
+         <h2>{props.item.name}</h2>
+         <p>{props.item.description}</p>
+      </div>
+    )
+}
+
   
 export default ReadMore;

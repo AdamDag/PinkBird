@@ -1,12 +1,8 @@
-import logo from './images/pinkbird_logo.png'
 import Button from '@mui/material/Button';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import bgImage from './images/PinkBird.png'
 import "./Landing.css";
 import flamingo from './images/flamingo.png'
 import Carousel from 'react-material-ui-carousel'
 import { Link } from 'react-router-dom'
-import { borderBottom } from '@mui/system';
 
 function Landing(props) {
   var items = [

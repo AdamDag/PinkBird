@@ -68,21 +68,19 @@ export default class Scan extends React.Component{
       console.log("Barcode:" + barcodeText)
 
   return (
-    <div>
-    <div
-      id='barcode-scanner-view'
-      style={{ height: "400px", width: "500px", position: "absolute", left: "50%", top: "50%",
-      transform: "translate(-50%, -50%)", border: "10px solid pink", borderRadius: "15px"}}>
+    <div className = "ScanPage">
+      <div
+        id='barcode-scanner-view'
+        style={{ height: "400px", width: "500px", position: "absolute", left: "50%", top: "50%",
+        transform: "translate(-50%, -50%)", border: "10px solid pink", borderRadius: "15px"}}>
+      </div>
+      <p>Item is ready when barcode appears: </p>
+      <Button>
+        <Link to = {'/Item/' + barcodeText}>
+          <p>{barcodeText}</p>
+        </Link>
+      </Button>
     </div>
-    <p>Item is ready when barcode appears: </p>
-    <Button>
-      <Link to = {'/Item/' + barcodeText}>
-        <p>{barcodeText}</p>
-      </Link>
-    </Button>
-  </div>
-
-
   );
 }
 }

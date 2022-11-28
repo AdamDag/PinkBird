@@ -1,12 +1,9 @@
 .ScanPage{
     background-color: #F0E7E7;
-    margin-top: 7vh;
-    margin-bottom: 3vh;
 }
 
 .ScanPage p{
-    font-size: 30px;
-    margin-bottom: 3vh;
+    margin-bottom: 2vh;
 }
 
 .ScanPage img{
@@ -15,7 +12,7 @@
 }
 
 .ScanPage Button{
-    margin-bottom: 32vh;
+    margin-bottom: 72vh;
     width: 36vh;
     height: 7vh;
     color: black;
@@ -34,3 +31,4 @@
 .ScanPage Button:active{
     text-decoration: none;
 }
+

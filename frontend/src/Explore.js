@@ -1,26 +1,16 @@
-import Button from '@mui/material/Button';
-import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import "./Explore.css";
-import docscan from './images/docscan.jpeg'
 import productImage from './images/product.jpg'
-import female from './images/femaleproducts.jpeg'
-import hygiene from './images/hygiene.jpeg'
-import stationary from './images/stationary.jpeg'
 import { Link } from 'react-router-dom';
 import React, {useEffect, useState} from 'react';
+import Image from 'react-random-image'
 
-  
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#ff80ab',
-    },
-    secondary: {
-      main: '#ffc1e3',
-    },
-  },
-});
+const linkStyle = {
+  textDecoration: "none",
+  color: 'black'
+};
+
+const url = 'https://images.unsplash.com/photo-1458538977777-0549b2370168?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2074&q=80'
 
 function Explore() {
     const[data, setData] = useState([])
@@ -42,9 +32,11 @@ function Explore() {
           ): (
               data.products?.map((product, index)=> (
                 <div className="Explore-body">
-                  <img src={productImage} width = "380"/>
+                  <img src={url}/>
                   <p>
-                    <Link to={"/Item/" + product.barcode}>{product.name}</Link> 
+                    <Link style={linkStyle} to={"/Item/" + product.barcode}>
+                      {product.name}
+                    </Link> 
                   </p>
                 </div>
                   ))

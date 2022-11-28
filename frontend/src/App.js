@@ -26,6 +26,7 @@ function App() {
         </Routes>
       </Router>
 
+      <BottomNavBar />
     </div>
   );
 }

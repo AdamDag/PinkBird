@@ -1,7 +1,11 @@
 .ReadMorePage{
-    background-color: #F0E7E7;
+    background-color: #EBF6F6;
 }
 
+.ReadMorePage img{
+    box-shadow: 0 0 8px 8px white inset;
+    width: 100%;
+}
 .ReadMorePage body{
     background-color: #F0E7E7;
 }
@@ -9,4 +13,11 @@
 .ReadMorePage h1{
     color: white;
     background-color: #F0E7E7;
+}
+
+.ReadMorePage h2{
+    font-family: Optima, sans-serif;
+    color: black;
+    text-align: left;
+    margin: 2vh;
 }
