@@ -1,0 +1,51 @@
+.LandingPageBody img{
+	position: relative;
+	margin-top: 5vh;
+	margin-bottom: 5vh;
+    left: -4vh;
+    width: 50vh;
+}
+
+.LandingPageBody h2{
+	color: #BF777B;
+	text-align: left;
+	margin-left: 4vh;
+	margin-right: 3vh;
+	margin-bottom: 1vh;
+}
+
+.LandingPageBody p{
+	color: #BF777B;
+	text-align: left;
+	margin-left: 4vh;
+	margin-right: 4vh;
+}
+
+.LandingPageBody .LandingPageButton p{
+	color: #EBF6F6;
+	font-size: 18px;
+	text-decoration: none;
+}
+
+.LandingPageBody .LandingPageButton p:active{
+	color: #EBF6F6;
+	font-size: 18px;
+	text-decoration: none;
+}
+
+.LandingPageBody .LandingPageButton{
+	position: relative;
+	margin-top: 3vh;
+	background-color: #BF777B;
+	height: 60px;
+	margin-bottom: 5vh;
+	text-decoration: none;
+}
+
+.LandingPageBody .LandingPageButton:hover{
+	background-color: #894f52;
+}
+
+
+
+
