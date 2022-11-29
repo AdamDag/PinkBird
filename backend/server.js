@@ -1,6 +1,9 @@
 const express = require('express')
 const app = express()
-const server = require("./app")
+const cors = require('cors');
+const mongoose = require('mongoose');
+const server = require("./APIcall2.js")
+
 
 const db = require("./db.js")
 const port = 4000

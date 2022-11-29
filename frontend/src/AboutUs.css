@@ -1,5 +1,8 @@
-.ScanPage .Scan-body h1{
-	color: black;
-	font-size: 50px;
-	padding-top: 10%;
+.AboutUsPage img{
+	margin-top: 2vh;
+	width: 70%;
+}
+
+.AboutUsPage img:hover{
+	opacity: 0.5;
 }

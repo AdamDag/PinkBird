@@ -14,28 +14,7 @@ const axios = require("axios") // middleware for making requests to APIs
 require("dotenv").config({ silent: true }) // load environmental variables from a hidden file named .env
 const morgan = require("morgan")
 
-
-app.get('/ProductData', function(req,res){
-    let products = [];
-
-    for(let i = 0; i<product_data.length;i++){
-            products[i] = [
-                product_data[i].barcode,
-                product_data[i].name,
-                product_data[i].description,
-                product_data[i].price,
-                product_data[i].category,
-                product_data[i].brand,
-                product_data[i].gender
-            ]   
-    }
-
-    res.send({
-        products:products
-    })
-
-})
-
+const APIData = require("./APIcall2.js")
 
  // export the express app we created to make it available to other modules
  module.exports = app;

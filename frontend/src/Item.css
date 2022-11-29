@@ -1,14 +1,40 @@
 .ItemPage{
     padding: 3%;
+    background-color: #F0E7E7;
 }
 
-.ItemPage img{
-    padding: 3%;
-    padding-left: 10%;
-    width: 50vh;
-    float: left;
+body{
+    background-color: #F0E7E7;
 }
 
 .ItemPage ul{
     list-style: none;
+}
+
+.ItemPage img{
+    border-radius: 10%;
+    width: 100%;
+}
+
+.ItemPage h2{
+    padding-top: 1vh;
+    text-align: left;
+    font-family: 'Times New Roman', Times, serif;
+    margin-bottom: 2vh;
+    font-size: 20px;
+}
+
+.ItemPage h1{
+    text-align: left;
+    font-size: 20px;
+}
+
+.ItemPage h4{
+    color: rgb(68, 68, 68);
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-align: left;
+}
+
+.ItemPage p{
+    text-align: left;
 }

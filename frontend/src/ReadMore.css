@@ -1,0 +1,33 @@
+.ReadMorePage{
+    background-color: #EBF6F6;
+}
+
+.ReadMorePage img{
+    box-shadow: 0 0 8px 8px white inset;
+    width: 100%;
+    border-bottom-left-radius: 10%;
+    border-bottom-right-radius: 10%;
+    opacity: 0.8;
+}
+.ReadMorePage body{
+    background-color: #F0E7E7;
+}
+
+.ReadMorePage h1{
+    font-size: 99px;
+    color: #EBF6F6;
+
+}
+
+.ReadMorePage h2{
+    font-family: Optima, sans-serif;
+    color: black;
+    text-align: left;
+    margin: 2vh;
+}
+
+.ReadMorePage p{
+    margin: 3vh;
+    text-align: left;
+    padding-bottom: 5vh;
+}

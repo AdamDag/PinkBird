@@ -4,67 +4,52 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import "./Item.css";
 import item from './images/sample_item_image.jpeg';
 import React, {useEffect, useState} from 'react';
+import { useParams } from 'react-router-dom';
+import productImage from './images/product.jpg'
 
-  
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#ff80ab',
-    },
-    secondary: {
-      main: '#ffc1e3',
-    },
-  },
-});
+const url = 'https://images.unsplash.com/photo-1458538977777-0549b2370168?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2074&q=80'
 
 function Item() {
-  const[userData, setUserData] = useState([{}])
+  const { barcode } = useParams();
+  const[data, setData] = useState([{}])
 
   useEffect(() => {
-    fetch("/api").then(
+    fetch("/ProductData?barcode="+barcode).then(
       response => response.json()
     ).then(
       data => {
-        setUserData(data)
+
+        setData(data)
       }
     )
   }, [])
 
   return (
-    <ThemeProvider theme={theme}>
     <div className="ItemPage">
-        <body className="item-body">
-        <img src={item} alt="items"/>
-        <h1>Pink Tax:</h1>
-        <h3></h3>
-        <br></br>
-        <h2>Item Information:</h2>
-        <ul>
-            <li>Name: </li>
-            <li>Price: </li>
-            <li>Category: </li>
-        </ul>
-        <h1>Recommended Alternatives:</h1>
-        {(typeof userData.users === 'undefined') ? (
+        {(typeof data.product === 'undefined') ? (
           <p>Loading</p>
           ) : (
-            userData.users.map((user, i) => (
-            <p key={i}>{user}</p>
-          ))
+            <div>
+              <img src={url} width = "380"/>
+              <h2>{data.product[0].name}</h2>
+              <br></br>
+              <h1>Pink Tax: ${data.product[0].pinkTaxValue}</h1>
+              <br></br>
+              <h4>Description:</h4>
+              <p> {data.product[0].description}</p>
+              <br></br>
+              <h4>Price:</h4>
+              <p><b></b> ${data.product[0].price}</p>
+              <br></br>
+              <h4>Category:</h4>
+              <p><b></b> {data.product[0].category}</p>
+              <br></br>
+            </div>
+            
           )}
-        </body>
-
-        <footer className="item-button">
-            <a href = "./Scan">
-            <Button size="large" variant="contained" color="secondary" startIcon={<DocumentScannerIcon />}>
-                <span className="font-link">
-                Scan Another!
-                </span>
-            </Button>
-            </a>
-        </footer>
+        <h1>Alternatives:</h1>
+        <br></br>
       </div>
-    </ThemeProvider>
   );
 }
   
