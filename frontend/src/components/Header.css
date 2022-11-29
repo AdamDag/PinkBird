@@ -1,0 +1,29 @@
+* {
+    margin: 0;
+    padding: 0;
+  }
+
+  .Header{
+    flex-direction: column;
+    min-height: 10vh;
+    font-size: calc(10px + 1vmin);
+    color: #BF777B;
+    background-color: #EBF6F6;
+  }
+
+  .Header img{
+    width: 50px;
+    flex-basis: 100%;
+    float: left;
+    padding-top: 2vh;
+    padding-left: 2vh;
+  }
+
+.Header h1{
+    font-family: "Georgia", sans-serif;
+    font-size: 36px;
+    float: left;
+    padding-top: 3.4vh;
+    padding-left: 1vh;
+}
+

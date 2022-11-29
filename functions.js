@@ -364,3 +364,4 @@ function sortBrandByTax(brands, brandTax){
     return outputList;
 }
 
+
