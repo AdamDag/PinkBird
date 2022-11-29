@@ -128,9 +128,9 @@ function productsOfShame(data){
     const shameList = [];
 
     // Creating array of pink taxed products
-    for (var i = 0; i < data.length; i++){
-        if (data[i].pinktax){
-            objectList.push(data[i]);
+    for (var i = 0; i < data.products[0].stores.length; i++){
+        if (data.products[0].stores[i].pinktax){
+            objectList.push(data.products[0].stores[i]);
         }
     }
 
@@ -190,9 +190,9 @@ function categoriesOfShame(data){
     let counter = 0;
 
     // Making list of all pink taxed products
-    for (var i = 0; i < data.length; i++){
-        if (data[i].pinktax){
-            objectList.push(data[i]);
+    for (var i = 0; i < data.products[0].stores.length; i++){
+        if (data.products[0].stores[i].pinktax){
+            objectList.push(data.products[0].stores[i]);
         }
     }
 
@@ -289,9 +289,9 @@ function brandsOfShame(data){
     let counter = 0;
 
     // Making list of all pink taxed products
-    for (var i = 0; i < data.length; i++){
-        if (data[i].pinktax){
-            objectList.push(data[i]);
+    for (var i = 0; i < data.products[0].stores.length; i++){
+        if (data.products[0].stores[i].pinktax){
+            objectList.push(data.products[0].stores[i]);
         }
     }
 
