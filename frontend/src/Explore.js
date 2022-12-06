@@ -13,7 +13,7 @@ function Explore() {
     const[data, setData] = useState([])
 
     useEffect(() => {
-      fetch("/ProductData").then(
+      fetch("https://pinkbird-deployment.onrender.com/ProductData").then(
         response => response.json()
       ).then(
         data => {
