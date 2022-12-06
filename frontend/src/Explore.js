@@ -1,9 +1,6 @@
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import "./Explore.css";
-import productImage from './images/product.jpg'
 import { Link } from 'react-router-dom';
 import React, {useEffect, useState} from 'react';
-import Image from 'react-random-image'
 
 const linkStyle = {
   textDecoration: "none",

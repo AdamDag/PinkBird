@@ -46,7 +46,7 @@ async function getAPIdata(barcode) {
 }
 //getAPIdata("079400260949");
 
-console.log(getAPIdata("079400448309").then((data) => {
+console.log(getAPIdata("850010618715").then((data) => {
     console.log(data)
     }));
     
@@ -93,9 +93,28 @@ async function reCalculatePinkTax(data){
             console.log("UPDATE");
                
         }
+        console.log("test3", productDb[productDb.length-1])
+        if(productDb[productDb.length-1].pinktax === true){
+            alternatives(data);
+        }
     }
 
 }
+async function alternatives(data){
+    let productDb = await Product.find({category: categorize(data)});
+    //initialize empty array of alternatives
+    let alternatives = [];
+    //sort the array by price low to high
+    productDb.sort((a, b) => (a.price > b.price) ? 1 : -1);
+    //add the first 10 items to the array
+    for(let i = 0; i < 3; i++){
+        alternatives.push(productDb[i]);
+    }
+    //return the array
+console.log(alternatives);
+    return alternatives;
+}
+
 
 function averagePriceUSD(data){
     //for all stores in data

@@ -1,16 +1,13 @@
 const { default: mongoose } = require('mongoose');
 let fetch = require('node-fetch');
 let {Product} = require('./db.js');
+
 const express = require("express")
 const app = express() // instantiate an Express object
 const {otherFunctions} = require("./functions.js")
 
 const cors = require('cors');
 app.use(cors());
-
-// import some useful middleware
-require("dotenv").config({ silent: true }) // load environmental variables from a hidden file named .env
-
 
 //module.exports = {Product, getAPIdata, pinkify, averagePriceUSD, averagePriceCAD, pinkTaxCalc, averageCategoryPrice};
 
@@ -47,7 +44,8 @@ async function getAPIdata(barcode) {
             .then((data) => {
    console.log(averagePriceUSD(data));
     //console.log(data.products[0].stores);
-    pinkify(data);
+    pinkify(data).then(() => reCalculatePinkTax(data)).catch(err => console.log(err));
+    //reCalculatePinkTax(data);
             })
             .catch(err => { 
                 throw err 
@@ -55,6 +53,16 @@ async function getAPIdata(barcode) {
 }
 }
 
+app.get('/alternatives', async function(req, res) {
+    const { category, id } = req.query;
+    const products = await Product.find({ category })
+
+    res.json({
+        products: products.filter((product) => {
+            return (product._id.toString() !== id)
+        })
+    });
+})
 app.get('/ProductData', async function(req,res){
     const barcode = req.query.barcode;
     if (!barcode) {
@@ -72,9 +80,10 @@ app.get('/ProductData', async function(req,res){
         })
     }
 })
+
 //getAPIdata("079400260949");
 
-console.log(getAPIdata("4084500488465").then((data) => {
+console.log(getAPIdata("850010618715").then((data) => {
     console.log(data)
     }));
     
@@ -96,35 +105,54 @@ async function pinkify(data){
 
     
     //create new mongoose object
-    await Product.create({barcode, name, description, price, category, brand, gender, pinktax, pinkTaxValue}, function (err, large) {
-        if (err) return console.error(err);
-        // saved!
-        console.log("CREATE");
-      });
-      reCalculatePinkTax(data);
+    return Product.create({barcode, name, description, price, category, brand, gender, pinktax, pinkTaxValue});
+      //reCalculatePinkTax(data);
       //
+      
 }
 async function reCalculatePinkTax(data){
     let productDb = await Product.find({category: categorize(data)});
     let acp = averageCategoryPrice2(data);
     if(productDb.length > 0){
-        console.log(productDb);
+        console.log(productDb.length);
         //add the data to the array
         for(let i = 0; i < productDb.length; i++){
-            console.log("TEST:" , data);
-            console.log("TEST 2", productDb);
+            //console.log("TEST:" , data);
+            //console.log("TEST 2", productDb);
             let pinkTax = pinkTaxCalc2(productDb[i], await acp);
             let pinkTaxValue = productDb[i].price - await acp;
-            console.log(productDb[i].price, await acp);
+            console.log("name:", productDb[i].name)
+            console.log("price", productDb[i].price, "ACP", await acp);
             console.log(pinkTaxValue);
 
         //update the database
             await Product.updateOne({barcode: productDb[i].barcode}, {pinktax: pinkTax, pinkTaxValue: pinkTaxValue});
+            console.log("UPDATE");
                
+        }
+        console.log("test3", productDb[productDb.length-1])
+        if(productDb[productDb.length-1].pinktax === true){
+            alternatives(data);
         }
     }
 
 }
+
+async function alternatives(data){
+    let productDb = await Product.find({category: categorize(data)});
+    //initialize empty array of alternatives
+    let alternatives = [];
+    //sort the array by price low to high
+    productDb.sort((a, b) => (a.price > b.price) ? 1 : -1);
+    //add the first 10 items to the array
+    for(let i = 0; i < 3; i++){
+        alternatives.push(productDb[i]);
+    }
+    //return the array
+console.log("alternative" + alternatives);
+    return alternatives;
+}
+
 
 function averagePriceUSD(data){
     //for all stores in data
@@ -151,7 +179,6 @@ function averagePriceUSD(data){
     return averagePrice;
 
 }
-
 function averagePriceCAD(data){
     //for all stores in data
     let CADCounter = 0;
@@ -208,8 +235,8 @@ async function averageCategoryPrice(data){
     let sumCatPrice = 0;
     let catCounter = 0;
     let catArray = [];
-    console.log(data.products[0].category);
-    console.log(data.products[0].title);
+    //console.log(data.products[0].category);
+    //console.log(data.products[0].title);
     //console.log(productdb);
     //console.log(data.category);
     //console.log(data.name);
@@ -244,7 +271,6 @@ async function averageCategoryPrice(data){
     console.log(averageCatPrice);
     return averageCatPrice;
 }
-
 function categorize(data){
     if(data.products[0].category.includes('Antiperspirant') || data.products[0].category.includes('Deodorant')|| data.products[0].category.includes('Anti-Perspirant') || data.products[0].title.includes('Antiperspirant') || data.products[0].title.includes('Deodorant')|| data.products[0].title.includes('Anti-Perspirant')){
         return 'Anti-Perspirant & Deodorant';
@@ -252,6 +278,8 @@ function categorize(data){
     else if(data.products[0].category.includes('Shampoo') || data.products[0].category.includes('Conditioner')|| data.products[0].category.includes('Hair') || data.products[0].title.includes('Shampoo') || data.products[0].title.includes('Conditioner')|| data.products[0].title.includes('Hair')){
         return 'Shampoo & Conditioner';
     }
+
+
 }
 
 async function averageCategoryPrice2(data){
@@ -322,24 +350,5 @@ function pinkTaxCalc2(data, acp){
     }
 
 }
-
-//Get Functions to Retrieve Data
-
-
-/*app.get('/ProductAlternatives', async function(req,res){
-    const barcode = req.query.barcode;
-    if (!barcode) {
-        const product = await Product.find({})
-    } else {
-        const product = await getAPIdata(barcode);
-    }
-
-    const alternativeOptions = await otherFunctions.alternatives(product, product.category)
-
-    res.json({
-        alternativeOptions
-    })
-})*/
-
 
 module.exports = app;
