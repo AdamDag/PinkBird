@@ -38,3 +38,22 @@ body{
 .ItemPage p{
     text-align: left;
 }
+
+.Item-Alternatives p{
+    text-align: left;
+    text-decoration: none;
+    padding-top: 2vh;
+    padding-left: 2vh;
+}
+
+.Item-Alternatives p:link{
+    text-decoration: none;
+}
+
+.Item-Alternatives p:active{
+    text-decoration: none;
+}
+
+.Item-Alternatives p:visited{
+    text-decoration: none;
+}
