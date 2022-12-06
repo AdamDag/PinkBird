@@ -1,11 +1,7 @@
-import Button from '@mui/material/Button';
-import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import "./Item.css";
-import item from './images/sample_item_image.jpeg';
 import React, {useEffect, useState} from 'react';
 import { useParams } from 'react-router-dom';
-import productImage from './images/product.jpg'
+import { Link } from 'react-router-dom';
 
 const url = 'https://images.unsplash.com/photo-1458538977777-0549b2370168?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2074&q=80'
 
@@ -23,6 +19,23 @@ function Item() {
       }
     )
   }, [])
+
+  const[alternates, setAlternates] = useState([])
+
+  useEffect(() => {
+    if (data?.product) {
+      fetch("/alternatives?id="+data.product[0]._id+"&category="+encodeURIComponent(data.product[0].category)).then(
+        response => response.json(),
+      ).then(
+        responseData => {
+          console.log(responseData)
+          setAlternates(responseData.products)
+        }
+      )
+    }
+    
+  }, [data])
+
 
   return (
     <div className="ItemPage">
@@ -44,10 +57,24 @@ function Item() {
               <h4>Category:</h4>
               <p><b></b> {data.product[0].category}</p>
               <br></br>
-            </div>
+          </div>
             
           )}
         <h1>Alternatives:</h1>
+        {(typeof alternates === 'undefined') ? (
+              <p>Loading</p>
+          ): (
+
+              alternates?.slice(0,3).map((alter, index)=> (
+                <div className="Item-Alternatives">
+                  <p>
+                    <Link to={"/Item/" + alter.barcode}>
+                      {alter.name}
+                    </Link> 
+                  </p>
+                </div>
+                  ))
+        )}
         <br></br>
       </div>
   );

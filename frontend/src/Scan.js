@@ -1,9 +1,5 @@
 import Button from '@mui/material/Button';
-import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import "./Scan.css";
-import docscan from './images/barcode.png'
-import BottomNavBar from './components/BottomNavBar';
 import { Link } from 'react-router-dom';
 import React from 'react';
 import ScanbotSDK from 'scanbot-web-sdk/webpack';
@@ -18,22 +14,22 @@ export default class Scan extends React.Component{
   barcodes = [];
     async componentDidMount() {
       const LICENSE_KEY =
-        "k2Hk8727EiJa5ajWK4Dgi3TSTFwmS/" +
-        "Nuuzs5/5W7v6Vx+Nz56ehUDW9yXLhw" +
-        "q/3O4xH0kqFFLW8GAUPbyLa6yneZA8" +
-        "dDehjWluIkr3ouZodXpv0H/vIie49v" +
-        "8ABpS0HmwisgMRkVdu+FyKT+vx9GtO" +
-        "+C2KFkAin5qEYCUofBYJAOCrV6pfwk" +
-        "+i/uwiHQ1RWb4wxkSZZjbTowGJV8aF" +
-        "aD44u/0WmQKWuGhPZGdrCfNotb1fuX" +
-        "BftpvmA188EmbbV7/IZ6zPArfuMEQY" +
-        "6P4lirhX44Mkob18j8Y4NfuzlQlHe3" +
-        "HDjqi183e7HfiUJMWgLKWROly/vnX4" +
-        "8Gm8XIeuzNIw==\nU2NhbmJvdFNESw" +
-        "psb2NhbGhvc3R8cGlua2JpcmQuaGVy" +
-        "b2t1YXBwLmNvbQoxNjY5NzY2Mzk5Cj" +
-        "gzODg2MDcKOA==\n";
-      this.sdk = await ScanbotSDK.initialize({
+      "NMykExAxSRnCYOKgWUt8FyzTXmw02I" +
+      "BoffHT0H5JoM4C7+LENd9bN5X69xMv" +
+      "Uwo47UCKSYLIXim3SQLrpZ7/hvRkb6" +
+      "nRVMFkoataFiYaCguDfujNAMBeOAKq" +
+      "n3D8fa05MPr0AxgtzBnA1dff2JoLTJ" +
+      "dE+FfWLkEz5SlI9BWrZy96KOnd9OYb" +
+      "Mu2SgYTQb77cBvztgaD+AkTYcDDYFQ" +
+      "ms4FugqWl61Ug9j00hHthHJ+m7EjPO" +
+      "8d8QXBcgyqMmr6UPm63Nviw3XIVTC9" +
+      "NdIVpc9QlJSjTiSSH22Neji4ac3ub0" +
+      "dDiyErpANQF7Weomn4XMwD/bqT2Rnv" +
+      "NpaKdcDmDeWQ==\nU2NhbmJvdFNESw" +
+      "psb2NhbGhvc3R8c3VidGxlLXB1ZGRp" +
+      "bmctYTUzNzhkLm5ldGxpZnkuYXBwCj" +
+      "E2NzA4ODk1OTkKODM4ODYwNwo4\n";
+        this.sdk = await ScanbotSDK.initialize({
         licenseKey: LICENSE_KEY,
         engine: "/",
       });
