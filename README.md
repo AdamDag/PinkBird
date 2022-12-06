@@ -11,6 +11,9 @@ At PinkBird, we are offering, typically women-identifying, consumers:
 - The chance to make educated decisions when purchasing products
 - And lastly, for ease, recommendations of products that match what they are looking for at the fraction of the cost
 
+## Link for Deployment
+Link: subtle-pudding-a5378d.netlify.app
+
 ## Main Functions and Technologies
 
 ### Functions

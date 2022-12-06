@@ -10,7 +10,7 @@ function Item() {
   const[data, setData] = useState([{}])
 
   useEffect(() => {
-    fetch("/ProductData?barcode="+barcode).then(
+    fetch("https://pinkbird-deployment.onrender.com/ProductData?barcode="+barcode).then(
       response => response.json()
     ).then(
       data => {
@@ -24,7 +24,7 @@ function Item() {
 
   useEffect(() => {
     if (data?.product) {
-      fetch("/alternatives?id="+data.product[0]._id+"&category="+encodeURIComponent(data.product[0].category)).then(
+      fetch("https://pinkbird-deployment.onrender.com/alternatives?id="+data.product[0]._id+"&category="+encodeURIComponent(data.product[0].category)).then(
         response => response.json(),
       ).then(
         responseData => {
@@ -62,7 +62,7 @@ function Item() {
           )}
         <h1>Alternatives:</h1>
         {(typeof alternates === 'undefined') ? (
-              <p>Loading</p>
+              <p>If you're receiving this message, we're looking for your product right now! To receive product information, simply reload. If that doesn't work, then we weren't able to find your product.</p>
           ): (
 
               alternates?.slice(0,3).map((alter, index)=> (
