@@ -1,3 +1,13 @@
+function categorize(data){
+    if(data.products[0].category.includes('Antiperspirant') || data.products[0].category.includes('Deodorant')|| data.products[0].category.includes('Anti-Perspirant') || data.products[0].title.includes('Antiperspirant') || data.products[0].title.includes('Deodorant')|| data.products[0].title.includes('Anti-Perspirant')){
+        return 'Anti-Perspirant & Deodorant';
+    }
+    else if(data.products[0].category.includes('Shampoo') || data.products[0].category.includes('Conditioner')|| data.products[0].category.includes('Hair') || data.products[0].title.includes('Shampoo') || data.products[0].title.includes('Conditioner')|| data.products[0].title.includes('Hair')){
+        return 'Shampoo & Conditioner';
+    }
+
+}
+
 //Create a function that compares a price with the average price of the products in the array
 function averagePrice(products) {
     //Create a variable to store the sum of the prices
@@ -46,30 +56,22 @@ function comparePrice(price, average){
 // category to a list and sort it. Place 3 lowest priced products
 // in a new list.
 // OUTPUT: List of 3 lowest priced products from category
-function alternatives(data, category){
+async function alts(data, category){
 
     // Auxiliary arrays
-    const products = []
+    const products = await Product.find({category: categorize(data)})
     const alternatives = []
 
-    // Retrieving all prodcuts from relevant category
-    for (let i = 0; i < data.products[0].stores.length; i++){
-        if(data.products[0].stores[i].brand == category){
-            products.push(data.products[0].stores[i]);
-        }
-    }
+    // sorting products based on increasing price
+    products.sort((a, b) => (a.price > b.price) ? 1 : -1);
 
-    // Soring products
-    products = generalSort(products);
-
-    // Return 3 lowest priced products
-    for (let i = 0; i < 3; i++){
+    for(let i = 0; i < 3; i++){
         alternatives.push(products[i]);
     }
 
-    return alternatvies;
-
-}
+    //return the array
+    console.log(alternatives);
+    return alternatives;
 
 // FUNCTION: generalSort
 // INPUT: array
@@ -121,29 +123,25 @@ function pinkTax(maleProducts, femaleProducts, product){
 // tax to an array and sort it. Put 10 highest pink taxed products
 // in an array.
 // OUTPUT: 10 highest pink taxed products in database
-function productsOfShame(data){
+async function productsOfShame(data){
 
     // Auxiliary arrays
-    const objectList = [];
+    let products = await Product.find({category: categorize(data)});
     const shameList = [];
 
-    // Creating array of pink taxed products
-    for (var i = 0; i < data.products[0].stores.length; i++){
-        if (data.products[0].stores[i].pinktax){
-            objectList.push(data.products[0].stores[i]);
-        }
-    }
-
     // Sorting array of products by pink tax
-    objectList = sortByTax(objectList);
-    
+    products.sort((a, b) => (a.pinkTax > b.pinkTax) ? 1 : -1);
+
     // Saving 10 highest pink taxed products
-    for (var i = objectList.length - 1; i >= objectList.length - 10; i--){
-        shameList.push(objectList[i]);
+    for(let i = 0; i < 10; i++){
+        shameList.push(products[i]);
     }
 
+    //return the array
+    console.log(shameList);
     return shameList;
 }
+
 
 // FUNCTION: sortByTax
 // INPUT: array
@@ -179,20 +177,26 @@ function sortByTax(data){
 // the category names list and average pink tax list by average
 // pink tax value for the category.
 // OUTPUT: 3 highest pink taxed categories and their value
-function categoriesOfShame(data){
+async function categoriesOfShame(data){
 
-    // Auxiliary array
+    // Auxiliary arrays
+    let products = await Product.find({category: categorize(data)});
     const objectList = [];
     const categoryList = [];
     const categoryAvgTax = [];
+
+    // Sorting array of products by pink tax
+    products.sort((a, b) => (a.pinkTax > b.pinkTax) ? 1 : -1);
+
+    // Auxiliary array
 
     let totalTax = 0;
     let counter = 0;
 
     // Making list of all pink taxed products
-    for (var i = 0; i < data.products[0].stores.length; i++){
-        if (data.products[0].stores[i].pinktax){
-            objectList.push(data.products[0].stores[i]);
+    for (var i = 0; i < products.length; i++){
+        if (products[i].pinktax == true){
+            objectList.push(products[i]);
         }
     }
 
@@ -234,6 +238,8 @@ function categoriesOfShame(data){
         shameList.push(temp[i+1]);
     }
 
+    //return the array
+    console.log(shameList);
     return shameList;
 }
 
@@ -278,9 +284,10 @@ function sortCatByTax(categories, catTax){
 // the brand names list and average pink tax list by average
 // pink tax value for the brand.
 // OUTPUT: Sorted array in format[brandName1, brandTax1, brandName2, brandTax2,...]
-function brandsOfShame(data){
+async function brandsOfShame(data){
 
     // Auxiliary arrays
+    let products = await Product.find({category: categorize(data)});
     const objectList = [];
     const brandsList= [];
     const brandAvgTax = [];
@@ -289,9 +296,9 @@ function brandsOfShame(data){
     let counter = 0;
 
     // Making list of all pink taxed products
-    for (var i = 0; i < data.products[0].stores.length; i++){
-        if (data.products[0].stores[i].pinktax){
-            objectList.push(data.products[0].stores[i]);
+    for (var i = 0; i < products.length; i++){
+        if (products[i].pinktax == true){
+            objectList.push(products[i]);
         }
     }
 
@@ -330,6 +337,8 @@ function brandsOfShame(data){
         shameList.push(temp[i+1]);
     }
 
+    //return the array
+    console.log(shameList);
     return shameList;
 }
 
