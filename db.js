@@ -17,7 +17,8 @@
     brand: String,
     gender: String,
     pinktax: Boolean,
-    pinkTaxValue: Number
+    pinkTaxValue: Number,
+    image: String
 });
 
 
