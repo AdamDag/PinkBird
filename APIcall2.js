@@ -251,7 +251,7 @@ function categorize(data){
         return 'Soap & Bodywash';
     }
     else{
-        return 'Other'
+        return 'Other';
     }
 
 
