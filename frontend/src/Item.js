@@ -3,8 +3,6 @@ import React, {useEffect, useState} from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
-const url = 'https://images.unsplash.com/photo-1458538977777-0549b2370168?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2074&q=80'
-
 function Item() {
   const { barcode } = useParams();
   const[data, setData] = useState([{}])
@@ -43,7 +41,7 @@ function Item() {
           <p>Loading</p>
           ) : (
             <div>
-              <img src={url} width = "380"/>
+              <img src={data.product[0].image} width = "380"/>
               <h2>{data.product[0].name}</h2>
               <br></br>
               <h1>Pink Tax: ${data.product[0].pinkTaxValue}</h1>

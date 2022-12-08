@@ -29,7 +29,7 @@ function Explore() {
           ): (
               data.products?.map((product, index)=> (
                 <div className="Explore-body">
-                  <img src={url}/>
+                  <img src={product.image}/>
                   <p>
                     <Link style={linkStyle} to={"/Item/" + product.barcode}>
                       {product.name}

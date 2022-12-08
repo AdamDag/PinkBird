@@ -9,10 +9,10 @@
 }
 
 .Explore-body img{
-    max-width: 100%;
-    margin-left: 3px;
+    max-height:90%;
+    margin-left: 1vh;
     border-radius: 10%;
-    margin-top: 2vh;
+    margin-top: 1vh;
 }
 
 .Explore-body p{
