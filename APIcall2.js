@@ -47,7 +47,7 @@ async function getAPIdata(barcode) {
 }
 //getAPIdata("079400260949");
 
-console.log(getAPIdata("037000712459").then((data) => {
+console.log(getAPIdata("099584923317").then((data) => {
     console.log(data)
     }));
     
@@ -65,7 +65,7 @@ async function pinkify(data){
     let gender = data.products[0].gender;
     let pinktax = pinkTaxCalc(data, acp);
     console.log(price, acp);
-    let pinkTaxValue = price - acp;
+    let pinkTaxValue = parseFloat(price - acp).toFixed(2);
     
 
     
@@ -85,7 +85,7 @@ async function reCalculatePinkTax(data){
             //console.log("TEST:" , data);
             //console.log("TEST 2", productDb);
             let pinkTax = pinkTaxCalc2(productDb[i], await acp);
-            let pinkTaxValue = productDb[i].price - await acp;
+            let pinkTaxValue = parseFloat(productDb[i].price - await acp).toFixed(2);
             console.log("name:", productDb[i].name)
             console.log("price", productDb[i].price, "ACP", await acp);
             console.log(pinkTaxValue);
@@ -222,6 +222,7 @@ async function averageCategoryPrice(data){
     //console.log(data.category)
     if(catArray.length == undefined|| catArray.length == 0){
         averageCatPrice = averagePriceUSD(data);
+        return averageCatPrice;
     }
     else{
     console.log(catArray.length);
@@ -237,8 +238,10 @@ async function averageCategoryPrice(data){
     console.log(catCounter);
     console.log(sumCatPrice);
     console.log(averageCatPrice);
-}
+
     return averageCatPrice;
+}
+    
 }
 function categorize(data){
     if(data.products[0].category.includes('Antiperspirant') || data.products[0].category.includes('Deodorant')|| data.products[0].category.includes('Anti-Perspirant') || data.products[0].title.includes('Antiperspirant') || data.products[0].title.includes('Deodorant')|| data.products[0].title.includes('Anti-Perspirant')){
@@ -288,6 +291,7 @@ async function averageCategoryPrice2(data){
     //console.log(data.category)
     if(catArray.length == undefined){
         averageCatPrice = averagePriceUSD(data);
+        return averageCatPrice;
     }
     else{
     console.log(catArray.length);
@@ -303,8 +307,8 @@ async function averageCategoryPrice2(data){
     console.log(catCounter);
     console.log(sumCatPrice);
     console.log(averageCatPrice);
-}
     return averageCatPrice;
+}
 }
 function pinkTaxCalc2(data, acp){
     if(data.gender !== 'undefined'){
