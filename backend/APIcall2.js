@@ -33,8 +33,7 @@ async function getAPIdata(barcode) {
     //if it doesn't, get the data from the API
     //const proxyurl = "https://pinkbird.herokuapp.com/"; // Use a proxy to avoid CORS error
     //const api_key = "vva9dg8tt9lljbuwsleah5ff4i2zdp";
-    //const api_key = "d8zvuvrsz7d2asckeql07nwej1ow33";
-    const api_key = "20ldbyp1xo4qxg4yho6on1mr465qzf";
+    const api_key = "d8zvuvrsz7d2asckeql07nwej1ow33";
     //const barcode = document.getElementById("barcode").value;
     //CONCATENATE BARCODE WITH URL
     const url = "https://api.barcodelookup.com/v3/products?barcode="+barcode+"&formatted=y&key=" + api_key;
@@ -81,17 +80,17 @@ app.get('/ProductData', async function(req,res){
         })
     }
 })
+
 //getAPIdata("079400260949");
 
-console.log(getAPIdata("037000712459").then((data) => {
+console.log(getAPIdata("850010618715").then((data) => {
     console.log(data)
     }));
     
 
 async function pinkify(data){
     let acp = await averageCategoryPrice(data);
-    let image = data.products[0].images[0];
-    console.log("IMAGE LINK", data.products[0].images[0]);
+
     let price = averagePriceUSD(data);
     let barcode = data.products[0].barcode_number;
     let name = data.products[0].title;
@@ -106,7 +105,7 @@ async function pinkify(data){
 
     
     //create new mongoose object
-    return Product.create({barcode, name, description, price, category, brand, gender, pinktax, pinkTaxValue, image});
+    return Product.create({barcode, name, description, price, category, brand, gender, pinktax, pinkTaxValue});
       //reCalculatePinkTax(data);
       //
       
@@ -256,10 +255,6 @@ async function averageCategoryPrice(data){
         //await(Product.find({category: data.products[i].category}))
     }
     //console.log(data.category)
-    if(catArray.length == undefined|| catArray.length == 0){
-        averageCatPrice = averagePriceUSD(data);
-    }
-    else{
     console.log(catArray.length);
     for (let i=0; i < catArray.length; i+=1){
         if(catArray[i].pinktax == false){
@@ -273,7 +268,6 @@ async function averageCategoryPrice(data){
     console.log(catCounter);
     console.log(sumCatPrice);
     console.log(averageCatPrice);
-}
     return averageCatPrice;
 }
 function categorize(data){
@@ -282,12 +276,6 @@ function categorize(data){
     }
     else if(data.products[0].category.includes('Shampoo') || data.products[0].category.includes('Conditioner')|| data.products[0].category.includes('Hair') || data.products[0].title.includes('Shampoo') || data.products[0].title.includes('Conditioner')|| data.products[0].title.includes('Hair')){
         return 'Shampoo & Conditioner';
-    }
-    else if(data.products[0].category.includes('Soap') || data.products[0].category.includes('Body Wash')|| data.products[0].category.includes('Bodywash') || data.products[0].title.includes('Soap') || data.products[0].title.includes('Body Wash')|| data.products[0].title.includes('Bodywash')){
-        return 'Soap & Bodywash';
-    }
-    else{
-        return 'Other';
     }
 
 
@@ -322,10 +310,6 @@ async function averageCategoryPrice2(data){
         //await(Product.find({category: data.products[i].category}))
     }
     //console.log(data.category)
-    if(catArray.length == undefined){
-        averageCatPrice = averagePriceUSD(data);
-    }
-    else{
     console.log(catArray.length);
     for (let i=0; i < catArray.length; i+=1){
         if(catArray[i].gender == 'male' || catArray[i].gender == 'unisex'){
@@ -339,7 +323,6 @@ async function averageCategoryPrice2(data){
     console.log(catCounter);
     console.log(sumCatPrice);
     console.log(averageCatPrice);
-}
     return averageCatPrice;
 }
 function pinkTaxCalc2(data, acp){
