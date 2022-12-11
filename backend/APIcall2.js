@@ -1,6 +1,12 @@
 const { default: mongoose } = require('mongoose');
 let fetch = require('node-fetch');
 let {Product} = require('./db.js');
+//module.exports = {Product, getAPIdata, pinkify, averagePriceUSD, averagePriceCAD, pinkTaxCalc, averageCategoryPrice};
+
+//require('db.js');
+//console.log(Product);
+//Item = mongoose.model('Item', Item);
+
 const express = require("express")
 const app = express() // instantiate an Express object
 const {otherFunctions} = require("./functions.js")
@@ -8,15 +14,6 @@ const {otherFunctions} = require("./functions.js")
 const cors = require('cors');
 app.use(cors());
 
-// import some useful middleware
-require("dotenv").config({ silent: true }) // load environmental variables from a hidden file named .env
-
-
-//module.exports = {Product, getAPIdata, pinkify, averagePriceUSD, averagePriceCAD, pinkTaxCalc, averageCategoryPrice};
-
-//require('db.js');
-//console.log(Product);
-//Item = mongoose.model('Item', Item);
 
 async function getAPIdata(barcode) {
     //check if barcode exists in database
@@ -36,7 +33,8 @@ async function getAPIdata(barcode) {
     //if it doesn't, get the data from the API
     //const proxyurl = "https://pinkbird.herokuapp.com/"; // Use a proxy to avoid CORS error
     //const api_key = "vva9dg8tt9lljbuwsleah5ff4i2zdp";
-    const api_key = "d8zvuvrsz7d2asckeql07nwej1ow33";
+    //const api_key = "d8zvuvrsz7d2asckeql07nwej1ow33";
+    const api_key = "20ldbyp1xo4qxg4yho6on1mr465qzf";
     //const barcode = document.getElementById("barcode").value;
     //CONCATENATE BARCODE WITH URL
     const url = "https://api.barcodelookup.com/v3/products?barcode="+barcode+"&formatted=y&key=" + api_key;
@@ -47,7 +45,8 @@ async function getAPIdata(barcode) {
             .then((data) => {
    console.log(averagePriceUSD(data));
     //console.log(data.products[0].stores);
-    pinkify(data);
+    pinkify(data).then(() => reCalculatePinkTax(data)).catch(err => console.log(err));
+    //reCalculatePinkTax(data);
             })
             .catch(err => { 
                 throw err 
@@ -55,6 +54,16 @@ async function getAPIdata(barcode) {
 }
 }
 
+app.get('/alternatives', async function(req, res) {
+    const { category, id } = req.query;
+    const products = await Product.find({ category })
+
+    res.json({
+        products: products.filter((product) => {
+            return (product._id.toString() !== id)
+        })
+    });
+})
 app.get('/ProductData', async function(req,res){
     const barcode = req.query.barcode;
     if (!barcode) {
@@ -72,16 +81,18 @@ app.get('/ProductData', async function(req,res){
         })
     }
 })
+
 //getAPIdata("079400260949");
 
-console.log(getAPIdata("4084500488465").then((data) => {
+console.log(getAPIdata("099584923317").then((data) => {
     console.log(data)
     }));
     
 
 async function pinkify(data){
     let acp = await averageCategoryPrice(data);
-
+    let image = data.products[0].images[0];
+    console.log("IMAGE LINK", data.products[0].images[0]);
     let price = averagePriceUSD(data);
     let barcode = data.products[0].barcode_number;
     let name = data.products[0].title;
@@ -91,40 +102,58 @@ async function pinkify(data){
     let gender = data.products[0].gender;
     let pinktax = pinkTaxCalc(data, acp);
     console.log(price, acp);
-    let pinkTaxValue = price - acp;
+    let pinkTaxValue = parseFloat(price - acp).toFixed(2);
     
 
     
     //create new mongoose object
-    await Product.create({barcode, name, description, price, category, brand, gender, pinktax, pinkTaxValue}, function (err, large) {
-        if (err) return console.error(err);
-        // saved!
-        console.log("CREATE");
-      });
-      reCalculatePinkTax(data);
+    return Product.create({barcode, name, description, price, category, brand, gender, pinktax, pinkTaxValue, image});
+      //reCalculatePinkTax(data);
       //
+      
 }
 async function reCalculatePinkTax(data){
     let productDb = await Product.find({category: categorize(data)});
     let acp = averageCategoryPrice2(data);
     if(productDb.length > 0){
-        console.log(productDb);
+        console.log(productDb.length);
         //add the data to the array
         for(let i = 0; i < productDb.length; i++){
-            console.log("TEST:" , data);
-            console.log("TEST 2", productDb);
+            //console.log("TEST:" , data);
+            //console.log("TEST 2", productDb);
             let pinkTax = pinkTaxCalc2(productDb[i], await acp);
-            let pinkTaxValue = productDb[i].price - await acp;
-            console.log(productDb[i].price, await acp);
+            let pinkTaxValue = parseFloat(productDb[i].price - await acp).toFixed(2);
+            console.log("name:", productDb[i].name)
+            console.log("price", productDb[i].price, "ACP", await acp);
             console.log(pinkTaxValue);
 
         //update the database
             await Product.updateOne({barcode: productDb[i].barcode}, {pinktax: pinkTax, pinkTaxValue: pinkTaxValue});
+            console.log("UPDATE");
                
+        }
+        console.log("test3", productDb[productDb.length-1])
+        if(productDb[productDb.length-1].pinktax === true){
+            alternatives(data);
         }
     }
 
 }
+async function alternatives(data){
+    let productDb = await Product.find({category: categorize(data)});
+    //initialize empty array of alternatives
+    let alternatives = [];
+    //sort the array by price low to high
+    productDb.sort((a, b) => (a.price > b.price) ? 1 : -1);
+    //add the first 10 items to the array
+    for(let i = 0; i < 3; i++){
+        alternatives.push(productDb[i]);
+    }
+    //return the array
+console.log(alternatives);
+    return alternatives;
+}
+
 
 function averagePriceUSD(data){
     //for all stores in data
@@ -151,7 +180,6 @@ function averagePriceUSD(data){
     return averagePrice;
 
 }
-
 function averagePriceCAD(data){
     //for all stores in data
     let CADCounter = 0;
@@ -208,8 +236,8 @@ async function averageCategoryPrice(data){
     let sumCatPrice = 0;
     let catCounter = 0;
     let catArray = [];
-    console.log(data.products[0].category);
-    console.log(data.products[0].title);
+    //console.log(data.products[0].category);
+    //console.log(data.products[0].title);
     //console.log(productdb);
     //console.log(data.category);
     //console.log(data.name);
@@ -229,6 +257,11 @@ async function averageCategoryPrice(data){
         //await(Product.find({category: data.products[i].category}))
     }
     //console.log(data.category)
+    if(catArray.length == undefined|| catArray.length == 0){
+        averageCatPrice = averagePriceUSD(data);
+        return averageCatPrice;
+    }
+    else{
     console.log(catArray.length);
     for (let i=0; i < catArray.length; i+=1){
         if(catArray[i].pinktax == false){
@@ -242,9 +275,11 @@ async function averageCategoryPrice(data){
     console.log(catCounter);
     console.log(sumCatPrice);
     console.log(averageCatPrice);
+
     return averageCatPrice;
 }
-
+    
+}
 function categorize(data){
     if(data.products[0].category.includes('Antiperspirant') || data.products[0].category.includes('Deodorant')|| data.products[0].category.includes('Anti-Perspirant') || data.products[0].title.includes('Antiperspirant') || data.products[0].title.includes('Deodorant')|| data.products[0].title.includes('Anti-Perspirant')){
         return 'Anti-Perspirant & Deodorant';
@@ -252,6 +287,14 @@ function categorize(data){
     else if(data.products[0].category.includes('Shampoo') || data.products[0].category.includes('Conditioner')|| data.products[0].category.includes('Hair') || data.products[0].title.includes('Shampoo') || data.products[0].title.includes('Conditioner')|| data.products[0].title.includes('Hair')){
         return 'Shampoo & Conditioner';
     }
+    else if(data.products[0].category.includes('Soap') || data.products[0].category.includes('Body Wash')|| data.products[0].category.includes('Bodywash') || data.products[0].title.includes('Soap') || data.products[0].title.includes('Body Wash')|| data.products[0].title.includes('Bodywash')){
+        return 'Soap & Bodywash';
+    }
+    else{
+        return 'Other';
+    }
+
+
 }
 
 async function averageCategoryPrice2(data){
@@ -283,6 +326,11 @@ async function averageCategoryPrice2(data){
         //await(Product.find({category: data.products[i].category}))
     }
     //console.log(data.category)
+    if(catArray.length == undefined){
+        averageCatPrice = averagePriceUSD(data);
+        return averageCatPrice;
+    }
+    else{
     console.log(catArray.length);
     for (let i=0; i < catArray.length; i+=1){
         if(catArray[i].gender == 'male' || catArray[i].gender == 'unisex'){
@@ -297,6 +345,7 @@ async function averageCategoryPrice2(data){
     console.log(sumCatPrice);
     console.log(averageCatPrice);
     return averageCatPrice;
+}
 }
 function pinkTaxCalc2(data, acp){
     if(data.gender !== 'undefined'){
@@ -322,24 +371,5 @@ function pinkTaxCalc2(data, acp){
     }
 
 }
-
-//Get Functions to Retrieve Data
-
-
-/*app.get('/ProductAlternatives', async function(req,res){
-    const barcode = req.query.barcode;
-    if (!barcode) {
-        const product = await Product.find({})
-    } else {
-        const product = await getAPIdata(barcode);
-    }
-
-    const alternativeOptions = await otherFunctions.alternatives(product, product.category)
-
-    res.json({
-        alternativeOptions
-    })
-})*/
-
 
 module.exports = app;

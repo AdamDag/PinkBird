@@ -15,7 +15,7 @@ function AboutUs() {
        <img src = {Sonia}/>
        <h4>Sonia Jain</h4>
        <img src = {Sakib}/>
-       <h4>Sakib</h4>
+       <h4>Sakib Ahmed</h4>
       </div>
 
   );

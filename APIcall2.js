@@ -36,7 +36,8 @@ async function getAPIdata(barcode) {
             .then((data) => {
    console.log(averagePriceUSD(data));
     //console.log(data.products[0].stores);
-    pinkify(data);
+    pinkify(data).then(() => reCalculatePinkTax(data)).catch(err => console.log(err));
+    //reCalculatePinkTax(data);
             })
             .catch(err => { 
                 throw err 
@@ -45,7 +46,7 @@ async function getAPIdata(barcode) {
 }
 //getAPIdata("079400260949");
 
-console.log(getAPIdata("4084500488465").then((data) => {
+console.log(getAPIdata("850010618715").then((data) => {
     console.log(data)
     }));
     
@@ -67,35 +68,53 @@ async function pinkify(data){
 
     
     //create new mongoose object
-    await Product.create({barcode, name, description, price, category, brand, gender, pinktax, pinkTaxValue}, function (err, large) {
-        if (err) return console.error(err);
-        // saved!
-        console.log("CREATE");
-      });
-      reCalculatePinkTax(data);
+    return Product.create({barcode, name, description, price, category, brand, gender, pinktax, pinkTaxValue});
+      //reCalculatePinkTax(data);
       //
+      
 }
 async function reCalculatePinkTax(data){
     let productDb = await Product.find({category: categorize(data)});
     let acp = averageCategoryPrice2(data);
     if(productDb.length > 0){
-        console.log(productDb);
+        console.log(productDb.length);
         //add the data to the array
         for(let i = 0; i < productDb.length; i++){
-            console.log("TEST:" , data);
-            console.log("TEST 2", productDb);
+            //console.log("TEST:" , data);
+            //console.log("TEST 2", productDb);
             let pinkTax = pinkTaxCalc2(productDb[i], await acp);
             let pinkTaxValue = productDb[i].price - await acp;
-            console.log(productDb[i].price, await acp);
+            console.log("name:", productDb[i].name)
+            console.log("price", productDb[i].price, "ACP", await acp);
             console.log(pinkTaxValue);
 
         //update the database
             await Product.updateOne({barcode: productDb[i].barcode}, {pinktax: pinkTax, pinkTaxValue: pinkTaxValue});
+            console.log("UPDATE");
                
+        }
+        console.log("test3", productDb[productDb.length-1])
+        if(productDb[productDb.length-1].pinktax === true){
+            alternatives(data);
         }
     }
 
 }
+async function alternatives(data){
+    let productDb = await Product.find({category: categorize(data)});
+    //initialize empty array of alternatives
+    let alternatives = [];
+    //sort the array by price low to high
+    productDb.sort((a, b) => (a.price > b.price) ? 1 : -1);
+    //add the first 10 items to the array
+    for(let i = 0; i < 3; i++){
+        alternatives.push(productDb[i]);
+    }
+    //return the array
+console.log(alternatives);
+    return alternatives;
+}
+
 
 function averagePriceUSD(data){
     //for all stores in data
@@ -178,8 +197,8 @@ async function averageCategoryPrice(data){
     let sumCatPrice = 0;
     let catCounter = 0;
     let catArray = [];
-    console.log(data.products[0].category);
-    console.log(data.products[0].title);
+    //console.log(data.products[0].category);
+    //console.log(data.products[0].title);
     //console.log(productdb);
     //console.log(data.category);
     //console.log(data.name);

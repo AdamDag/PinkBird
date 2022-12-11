@@ -1,9 +1,6 @@
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import "./Explore.css";
-import productImage from './images/product.jpg'
 import { Link } from 'react-router-dom';
 import React, {useEffect, useState} from 'react';
-import Image from 'react-random-image'
 
 const linkStyle = {
   textDecoration: "none",
@@ -16,7 +13,7 @@ function Explore() {
     const[data, setData] = useState([])
 
     useEffect(() => {
-      fetch("/ProductData").then(
+      fetch("https://pinkbird-deployment.onrender.com/ProductData").then(
         response => response.json()
       ).then(
         data => {
@@ -32,7 +29,7 @@ function Explore() {
           ): (
               data.products?.map((product, index)=> (
                 <div className="Explore-body">
-                  <img src={url}/>
+                  <img src={product.image}/>
                   <p>
                     <Link style={linkStyle} to={"/Item/" + product.barcode}>
                       {product.name}
