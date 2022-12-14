@@ -14,6 +14,8 @@ At PinkBird, we are offering, typically women-identifying, consumers:
 ## Link for Deployment
 Link: subtle-pudding-a5378d.netlify.app
 
+Note: Application looks/works best on mobile.
+
 ## Main Functions and Technologies
 
 ### Functions
