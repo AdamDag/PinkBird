@@ -13,22 +13,22 @@ export default class Scan extends React.Component{
   }
   barcodes = [];
     async componentDidMount() {
-      const LICENSE_KEY =
-      "NMykExAxSRnCYOKgWUt8FyzTXmw02I" +
-      "BoffHT0H5JoM4C7+LENd9bN5X69xMv" +
-      "Uwo47UCKSYLIXim3SQLrpZ7/hvRkb6" +
-      "nRVMFkoataFiYaCguDfujNAMBeOAKq" +
-      "n3D8fa05MPr0AxgtzBnA1dff2JoLTJ" +
-      "dE+FfWLkEz5SlI9BWrZy96KOnd9OYb" +
-      "Mu2SgYTQb77cBvztgaD+AkTYcDDYFQ" +
-      "ms4FugqWl61Ug9j00hHthHJ+m7EjPO" +
-      "8d8QXBcgyqMmr6UPm63Nviw3XIVTC9" +
-      "NdIVpc9QlJSjTiSSH22Neji4ac3ub0" +
-      "dDiyErpANQF7Weomn4XMwD/bqT2Rnv" +
-      "NpaKdcDmDeWQ==\nU2NhbmJvdFNESw" +
-      "psb2NhbGhvc3R8c3VidGxlLXB1ZGRp" +
-      "bmctYTUzNzhkLm5ldGxpZnkuYXBwCj" +
-      "E2NzA4ODk1OTkKODM4ODYwNwo4\n";
+const LICENSE_KEY =
+  "QSsjGsRa+d0YYozwgRa7XyTQKiNlid" +
+  "A4T8YBcg2/KDx92YpbdOGHT+JO6cei" +
+  "FA19I8elbD8+EX6MEnc6ZnvK6+dVRx" +
+  "5JQPQ39FL5fDyUaSzzBRDLWCtlbAH3" +
+  "DH9Mn1JMcarI4gLoM6FZkTV2uUOXzJ" +
+  "HUXfyFp0rclK+QhDKttB8GwscophuY" +
+  "REI43+Rx3HlqhjkgQEsY5PLobUP3me" +
+  "QlbbV9UAsJdiDldaqHKC8J4Tmk6LPp" +
+  "FGZ94rBjNWn7YYbtN1Kjobow1h+bo2" +
+  "k22FD+EHXx6mtnVdhj5KQs05aNwuB4" +
+  "PH2v74B91FAageRfLfQYKo2YPL8QAV" +
+  "SfsAEXP+j7JQ==\nU2NhbmJvdFNESw" +
+  "psb2NhbGhvc3R8cGlua2JpcmQtYXBw" +
+  "Lm5ldGxpZnkuYXBwCjE2NzE5MjYzOT" +
+  "kKODM4ODYwNwo4\n";
         this.sdk = await ScanbotSDK.initialize({
         licenseKey: LICENSE_KEY,
         engine: "/",
