@@ -34,7 +34,8 @@ async function getAPIdata(barcode) {
     //const proxyurl = "https://pinkbird.herokuapp.com/"; // Use a proxy to avoid CORS error
     //const api_key = "vva9dg8tt9lljbuwsleah5ff4i2zdp";
     //const api_key = "d8zvuvrsz7d2asckeql07nwej1ow33";
-    const api_key = "20ldbyp1xo4qxg4yho6on1mr465qzf";
+    //const api_key = "20ldbyp1xo4qxg4yho6on1mr465qzf";
+      const api_key = "pw31mmphm17b1tnkb1nbjoesz8chuk";
     //const barcode = document.getElementById("barcode").value;
     //CONCATENATE BARCODE WITH URL
     const url = "https://api.barcodelookup.com/v3/products?barcode="+barcode+"&formatted=y&key=" + api_key;
